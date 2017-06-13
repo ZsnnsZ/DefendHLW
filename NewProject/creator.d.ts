@@ -2510,146 +2510,6 @@ declare module cc {
 		*/
 		update(dt: number): void;	
 	}	
-	/** !#en Class for animation data handling.
-	!#zh 动画剪辑，用于存储动画数据。 */
-	export class AnimationClip extends Asset {		
-		/** !#en Duration of this animation.
-		!#zh 动画的持续时间。 */
-		duration: number;		
-		/** !#en FrameRate of this animation.
-		!#zh 动画的帧速率。 */
-		sample: number;		
-		/** !#en Speed of this animation.
-		!#zh 动画的播放速度。 */
-		speed: number;		
-		/** !#en WrapMode of this animation.
-		!#zh 动画的循环模式。 */
-		wrapMode: WrapMode;		
-		/** !#en Curve data.
-		!#zh 曲线数据。 */
-		curveData: any;		
-		/** !#en Event data.
-		!#zh 事件数据。 */
-		events: {frame: number, func: string, params: string[]}[];		
-		/**
-		!#en Crate clip with a set of sprite frames
-		!#zh 使用一组序列帧图片来创建动画剪辑
-		@param spriteFrames spriteFrames
-		@param sample sample
-		
-		@example 
-		```js
-		var clip = cc.AnimationClip.createWithSpriteFrames(spriteFrames, 10);
-		``` 
-		*/
-		createWithSpriteFrames(spriteFrames: [SpriteFrame], sample: number): AnimationClip;	
-	}	
-	/** !#en
-	The AnimationState gives full control over animation playback process.
-	In most cases the Animation Component is sufficient and easier to use. Use the AnimationState if you need full control.
-	!#zh
-	AnimationState 完全控制动画播放过程。<br/>
-	大多数情况下 动画组件 是足够和易于使用的。如果您需要更多的动画控制接口，请使用 AnimationState。 */
-	export class AnimationState extends AnimationNode {		
-		/**
-		
-		@param clip clip
-		@param name name 
-		*/
-		constructor(clip: AnimationClip, name?: string);		
-		/** !#en The clip that is being played by this animation state.
-		!#zh 此动画状态正在播放的剪辑。 */
-		clip: AnimationClip;		
-		/** !#en The name of the playing animation.
-		!#zh 动画的名字 */
-		name: string;	
-	}	
-	/** undefined */
-	export class Playable {		
-		/** !#en Is playing or paused in play mode?
-		!#zh 当前是否正在播放。 */
-		isPlaying: boolean;		
-		/** !#en Is currently paused? This can be true even if in edit mode(isPlaying == false).
-		!#zh 当前是否正在暂停 */
-		isPaused: boolean;		
-		/**
-		!#en Play this animation.
-		!#zh 播放动画。 
-		*/
-		play(): void;		
-		/**
-		!#en Stop this animation.
-		!#zh 停止动画播放。 
-		*/
-		stop(): void;		
-		/**
-		!#en Pause this animation.
-		!#zh 暂停动画。 
-		*/
-		pause(): void;		
-		/**
-		!#en Resume this animation.
-		!#zh 重新播放动画。 
-		*/
-		resume(): void;		
-		/**
-		!#en Perform a single frame step.
-		!#zh 执行一帧动画。 
-		*/
-		step(): void;	
-	}	
-	/** !#en Specifies how time is treated when it is outside of the keyframe range of an Animation.
-	!#zh 动画使用的循环模式。 */
-	export enum WrapMode {		
-		Default = 0,
-		Normal = 0,
-		Reverse = 0,
-		Loop = 0,
-		LoopReverse = 0,
-		PingPong = 0,
-		PingPongReverse = 0,	
-	}	
-	/** !#en The abstract interface for all playing animation.
-	!#zh 所有播放动画的抽象接口。 */
-	export class AnimationNodeBase extends Playable {	
-	}	
-	/** !#en The collection and instance of playing animations.
-	!#zh 动画曲线的集合，根据当前时间计算出每条曲线的状态。 */
-	export class AnimationNode extends AnimationNodeBase {		
-		/** !#en The curves list.
-		!#zh 曲线列表。 */
-		curves: any[];		
-		/** !#en The start delay which represents the number of seconds from an animation's start time to the start of
-		the active interval.
-		!#zh 延迟多少秒播放。 */
-		delay: number;		
-		/** !#en The animation's iteration count property.
-		
-		A real number greater than or equal to zero (including positive infinity) representing the number of times
-		to repeat the animation node.
-		
-		Values less than zero and NaN values are treated as the value 1.0 for the purpose of timing model
-		calculations.
-		
-		!#zh 迭代次数，指动画播放多少次后结束, normalize time。 如 2.5（2次半） */
-		repeatCount: number;		
-		/** !#en The iteration duration of this animation in seconds. (length)
-		!#zh 单次动画的持续时间，秒。 */
-		duration: number;		
-		/** !#en The animation's playback speed. 1 is normal playback speed.
-		!#zh 播放速率。 */
-		speed: number;		
-		/** !#en
-		Wrapping mode of the playing animation.
-		Notice : dynamic change wrapMode will reset time and repeatCount property
-		!#zh
-		动画循环方式。
-		需要注意的是，动态修改 wrapMode 时，会重置 time 以及 repeatCount */
-		wrapMode: WrapMode;		
-		/** !#en The current time of this animation in seconds.
-		!#zh 动画当前的时间，秒。 */
-		time: number;	
-	}	
 	/** !#en cc.audioEngine is the singleton object, it provide simple audio APIs.
 	!#zh
 	cc.audioengine是单例对象。<br/>
@@ -2923,49 +2783,6 @@ declare module cc {
 		*/
 		static setMaxWebAudioSize(kb: void): void;	
 	}	
-	/** !#en
-	cc.MotionStreak manages a Ribbon based on it's motion in absolute space.                 <br/>
-	You construct it with a fadeTime, minimum segment size, texture path, texture            <br/>
-	length and color. The fadeTime controls how long it takes each vertex in                 <br/>
-	the streak to fade out, the minimum segment size it how many pixels the                  <br/>
-	streak will move before adding a new ribbon segment, and the texture                     <br/>
-	length is the how many pixels the texture is stretched across. The texture               <br/>
-	is vertically aligned along the streak segment.
-	!#zh 运动轨迹，用于游戏对象的运动轨迹上实现拖尾渐隐效果。 */
-	export class MotionStreak extends Component {		
-		/** !#en
-		!#zh 在编辑器模式下预览拖尾效果。 */
-		preview: boolean;		
-		/** !#en The fade time to fade.
-		!#zh 拖尾的渐隐时间，以秒为单位。 */
-		fadeTime: number;		
-		/** !#en The minimum segment size.
-		!#zh 拖尾之间最小距离。 */
-		minSeg: number;		
-		/** !#en The stroke's width.
-		!#zh 拖尾的宽度。 */
-		stroke: number;		
-		/** !#en The texture of the MotionStreak.
-		!#zh 拖尾的贴图。 */
-		texture: Texture2D;		
-		/** !#en The color of the MotionStreak.
-		!#zh 拖尾的颜色 */
-		color: Color;		
-		/** !#en The fast Mode.
-		!#zh 是否启用了快速模式。当启用快速模式，新的点会被更快地添加，但精度较低。 */
-		fastMode: boolean;		
-		/**
-		!#en Remove all living segments of the ribbon.
-		!#zh 删除当前所有的拖尾片段。
-		
-		@example 
-		```js
-		// stop particle system.
-		myParticleSystem.stopSystem();
-		``` 
-		*/
-		reset(): void;	
-	}	
 	/** Particle System base class. <br/>
 	Attributes of a Particle System:<br/>
 	 - emmision rate of the particles<br/>
@@ -3202,6 +3019,189 @@ declare module cc {
 		@param rect rect 
 		*/
 		setTextureWithRect(texture: Texture2D, rect: Rect): void;	
+	}	
+	/** !#en
+	cc.MotionStreak manages a Ribbon based on it's motion in absolute space.                 <br/>
+	You construct it with a fadeTime, minimum segment size, texture path, texture            <br/>
+	length and color. The fadeTime controls how long it takes each vertex in                 <br/>
+	the streak to fade out, the minimum segment size it how many pixels the                  <br/>
+	streak will move before adding a new ribbon segment, and the texture                     <br/>
+	length is the how many pixels the texture is stretched across. The texture               <br/>
+	is vertically aligned along the streak segment.
+	!#zh 运动轨迹，用于游戏对象的运动轨迹上实现拖尾渐隐效果。 */
+	export class MotionStreak extends Component {		
+		/** !#en
+		!#zh 在编辑器模式下预览拖尾效果。 */
+		preview: boolean;		
+		/** !#en The fade time to fade.
+		!#zh 拖尾的渐隐时间，以秒为单位。 */
+		fadeTime: number;		
+		/** !#en The minimum segment size.
+		!#zh 拖尾之间最小距离。 */
+		minSeg: number;		
+		/** !#en The stroke's width.
+		!#zh 拖尾的宽度。 */
+		stroke: number;		
+		/** !#en The texture of the MotionStreak.
+		!#zh 拖尾的贴图。 */
+		texture: Texture2D;		
+		/** !#en The color of the MotionStreak.
+		!#zh 拖尾的颜色 */
+		color: Color;		
+		/** !#en The fast Mode.
+		!#zh 是否启用了快速模式。当启用快速模式，新的点会被更快地添加，但精度较低。 */
+		fastMode: boolean;		
+		/**
+		!#en Remove all living segments of the ribbon.
+		!#zh 删除当前所有的拖尾片段。
+		
+		@example 
+		```js
+		// stop particle system.
+		myParticleSystem.stopSystem();
+		``` 
+		*/
+		reset(): void;	
+	}	
+	/** !#en Class for animation data handling.
+	!#zh 动画剪辑，用于存储动画数据。 */
+	export class AnimationClip extends Asset {		
+		/** !#en Duration of this animation.
+		!#zh 动画的持续时间。 */
+		duration: number;		
+		/** !#en FrameRate of this animation.
+		!#zh 动画的帧速率。 */
+		sample: number;		
+		/** !#en Speed of this animation.
+		!#zh 动画的播放速度。 */
+		speed: number;		
+		/** !#en WrapMode of this animation.
+		!#zh 动画的循环模式。 */
+		wrapMode: WrapMode;		
+		/** !#en Curve data.
+		!#zh 曲线数据。 */
+		curveData: any;		
+		/** !#en Event data.
+		!#zh 事件数据。 */
+		events: {frame: number, func: string, params: string[]}[];		
+		/**
+		!#en Crate clip with a set of sprite frames
+		!#zh 使用一组序列帧图片来创建动画剪辑
+		@param spriteFrames spriteFrames
+		@param sample sample
+		
+		@example 
+		```js
+		var clip = cc.AnimationClip.createWithSpriteFrames(spriteFrames, 10);
+		``` 
+		*/
+		createWithSpriteFrames(spriteFrames: [SpriteFrame], sample: number): AnimationClip;	
+	}	
+	/** !#en
+	The AnimationState gives full control over animation playback process.
+	In most cases the Animation Component is sufficient and easier to use. Use the AnimationState if you need full control.
+	!#zh
+	AnimationState 完全控制动画播放过程。<br/>
+	大多数情况下 动画组件 是足够和易于使用的。如果您需要更多的动画控制接口，请使用 AnimationState。 */
+	export class AnimationState extends AnimationNode {		
+		/**
+		
+		@param clip clip
+		@param name name 
+		*/
+		constructor(clip: AnimationClip, name?: string);		
+		/** !#en The clip that is being played by this animation state.
+		!#zh 此动画状态正在播放的剪辑。 */
+		clip: AnimationClip;		
+		/** !#en The name of the playing animation.
+		!#zh 动画的名字 */
+		name: string;	
+	}	
+	/** undefined */
+	export class Playable {		
+		/** !#en Is playing or paused in play mode?
+		!#zh 当前是否正在播放。 */
+		isPlaying: boolean;		
+		/** !#en Is currently paused? This can be true even if in edit mode(isPlaying == false).
+		!#zh 当前是否正在暂停 */
+		isPaused: boolean;		
+		/**
+		!#en Play this animation.
+		!#zh 播放动画。 
+		*/
+		play(): void;		
+		/**
+		!#en Stop this animation.
+		!#zh 停止动画播放。 
+		*/
+		stop(): void;		
+		/**
+		!#en Pause this animation.
+		!#zh 暂停动画。 
+		*/
+		pause(): void;		
+		/**
+		!#en Resume this animation.
+		!#zh 重新播放动画。 
+		*/
+		resume(): void;		
+		/**
+		!#en Perform a single frame step.
+		!#zh 执行一帧动画。 
+		*/
+		step(): void;	
+	}	
+	/** !#en Specifies how time is treated when it is outside of the keyframe range of an Animation.
+	!#zh 动画使用的循环模式。 */
+	export enum WrapMode {		
+		Default = 0,
+		Normal = 0,
+		Reverse = 0,
+		Loop = 0,
+		LoopReverse = 0,
+		PingPong = 0,
+		PingPongReverse = 0,	
+	}	
+	/** !#en The abstract interface for all playing animation.
+	!#zh 所有播放动画的抽象接口。 */
+	export class AnimationNodeBase extends Playable {	
+	}	
+	/** !#en The collection and instance of playing animations.
+	!#zh 动画曲线的集合，根据当前时间计算出每条曲线的状态。 */
+	export class AnimationNode extends AnimationNodeBase {		
+		/** !#en The curves list.
+		!#zh 曲线列表。 */
+		curves: any[];		
+		/** !#en The start delay which represents the number of seconds from an animation's start time to the start of
+		the active interval.
+		!#zh 延迟多少秒播放。 */
+		delay: number;		
+		/** !#en The animation's iteration count property.
+		
+		A real number greater than or equal to zero (including positive infinity) representing the number of times
+		to repeat the animation node.
+		
+		Values less than zero and NaN values are treated as the value 1.0 for the purpose of timing model
+		calculations.
+		
+		!#zh 迭代次数，指动画播放多少次后结束, normalize time。 如 2.5（2次半） */
+		repeatCount: number;		
+		/** !#en The iteration duration of this animation in seconds. (length)
+		!#zh 单次动画的持续时间，秒。 */
+		duration: number;		
+		/** !#en The animation's playback speed. 1 is normal playback speed.
+		!#zh 播放速率。 */
+		speed: number;		
+		/** !#en
+		Wrapping mode of the playing animation.
+		Notice : dynamic change wrapMode will reset time and repeatCount property
+		!#zh
+		动画循环方式。
+		需要注意的是，动态修改 wrapMode 时，会重置 time 以及 repeatCount */
+		wrapMode: WrapMode;		
+		/** !#en The current time of this animation in seconds.
+		!#zh 动画当前的时间，秒。 */
+		time: number;	
 	}	
 	/** !#en
 	<p>
@@ -5506,6 +5506,383 @@ declare module cc {
 		*/
 		drainAllPools(): void;	
 	}	
+	/** !#en Class for audio data handling.
+	!#zh 音频资源类。 */
+	export class AudioClip extends RawAsset {	
+	}	
+	/** !#en
+	Base class for handling assets used in Fireball. This class can be instantiate.
+	
+	You may want to override:<br/>
+	- createNode<br/>
+	- cc.Object._serialize<br/>
+	- cc.Object._deserialize<br/>
+	!#zh
+	资源基类，该类可以被实例化。<br/>
+	
+	您可能需要重写：<br/>
+	- createNode <br/>
+	- cc.Object._serialize<br/>
+	- cc.Object._deserialize<br/> */
+	export class Asset extends RawAsset {		
+		/** !#en
+		Returns the url of this asset's first raw file, if none of rawFile exists,
+		it will returns an empty string.
+		!#zh 返回该资源的原始文件的 URL，如果不支持 RAW 文件，它将返回一个空字符串。 */
+		rawUrl: string;		
+		/** !#en
+		Returns the url of this asset's raw files, if none of rawFile exists,
+		it will returns an empty array.
+		!#zh 返回该资源的原文件的 URL 数组，如果不支持 RAW 文件，它将返回一个空数组。 */
+		rawUrls: string[];		
+		/** !#en Indicates whether its dependent raw assets can support deferred load if the owner scene (or prefab) is marked as `asyncLoadAssets`.
+		!#zh 当场景或 Prefab 被标记为 `asyncLoadAssets`，禁止延迟加载该资源所依赖的其它 RawAsset。 */
+		static preventDeferredLoadDependents: boolean;		
+		/**
+		!#en
+		Create a new node using this asset in the scene.<br/>
+		If this type of asset dont have its corresponding node type, this method should be null.
+		!#zh
+		使用该资源在场景中创建一个新节点。<br/>
+		如果这类资源没有相应的节点类型，该方法应该是空的。
+		@param callback callback 
+		*/
+		createNode(callback: (error: string, node: any) => void): void;	
+	}	
+	/** !#en Class for BitmapFont handling.
+	!#zh 位图字体资源类。 */
+	export class BitmapFont extends RawAsset {	
+	}	
+	/** !#en Class for Font handling.
+	!#zh 字体资源类。 */
+	export class Font extends RawAsset {	
+	}	
+	/** !#en Class for LabelAtlas handling.
+	!#zh 艺术数字字体资源类。 */
+	export class LabelAtlas extends BitmapFont {	
+	}	
+	/** !#en Class for prefab handling.
+	!#zh 预制资源类。 */
+	export class Prefab extends Asset {		
+		/** the main cc.Node in the prefab */
+		data: Node;		
+		/** !#en Indicates the raw assets of this prefab can be load after prefab loaded.
+		!#zh 指示该 Prefab 依赖的资源可否在 Prefab 加载后再延迟加载。 */
+		asyncLoadAssets: boolean;		
+		/**
+		Dynamically translation prefab data into minimized code.<br/>
+		This method will be called automatically before the first time the prefab being instantiated,
+		but you can re-call to refresh the create function once you modified the original prefab data in script. 
+		*/
+		compileCreateFunction(): void;	
+	}	
+	/** !#en
+	The base class for registering asset types.
+	
+	You may want to override:
+	- createNode (static)
+	!#zh
+	注册用的资源基类。<br/>
+	你可能要重写：<br/>
+	- createNode (static) */
+	export class RawAsset extends Object {		
+		/**
+		!#en
+		Create a new node in the scene.<br/>
+		If this type of asset dont have its corresponding node type, this method should be null.
+		!#zh
+		在场景中创建一个新节点。<br/>
+		如果这类资源没有相应的节点类型，该方法应该是空的。
+		@param Info Info
+		@param callback callback 
+		*/
+		static createNodeByInfo(Info: any, callback: (error: string, node: any) => void): void;	
+	}	
+	/** !#en Class for scene handling.
+	!#zh 场景资源类。 */
+	export class SceneAsset extends Asset {		
+		scene: Scene;		
+		/** !#en Indicates the raw assets of this scene can be load after scene launched.
+		!#zh 指示该场景依赖的资源可否在场景切换后再延迟加载。 */
+		asyncLoadAssets: boolean;	
+	}	
+	/** !#en Class for script handling.
+	!#zh Script 资源类。 */
+	export class _Script extends Asset {	
+	}	
+	/** !#en Class for JavaScript handling.
+	!#zh JavaScript 资源类。 */
+	export class _JavaScript extends Asset {	
+	}	
+	/** !#en Class for coffeescript handling.
+	!#zh CoffeeScript 资源类。 */
+	export class CoffeeScript extends Asset {	
+	}	
+	/** !#en Class for TypeScript handling.
+	!#zh TypeScript 资源类。 */
+	export class TypeScript extends Asset {	
+	}	
+	/** !#en Class for sprite atlas handling.
+	!#zh 精灵图集资源类。 */
+	export class SpriteAtlas extends RawAsset {		
+		/**
+		Returns the texture of the sprite atlas 
+		*/
+		getTexture(): Texture2D;		
+		/**
+		Returns the sprite frame correspond to the given key in sprite atlas.
+		@param key key 
+		*/
+		getSpriteFrame(key: string): SpriteFrame;		
+		/**
+		Returns the sprite frames in sprite atlas. 
+		*/
+		getSpriteFrames(): [SpriteFrame];	
+	}	
+	/** !#en Class for TTFFont handling.
+	!#zh TTF 字体资源类。 */
+	export class TTFFont extends Asset {	
+	}	
+	/** !#en Class for text file.
+	!#zh 文本资源类。 */
+	export class TextAsset extends Asset {	
+	}	
+	/** !#en Box Collider.
+	!#zh 包围盒碰撞组件 */
+	export class BoxCollider extends Component {		
+		/** !#en Position offset
+		!#zh 位置偏移量 */
+		offset: Vec2;		
+		/** !#en Box size
+		!#zh 包围盒大小 */
+		size: Size;	
+	}	
+	/** !#en Circle Collider.
+	!#zh 圆形碰撞组件 */
+	export class CircleCollider extends Component {		
+		/** !#en Position offset
+		!#zh 位置偏移量 */
+		offset: Vec2;		
+		/** !#en Circle radius
+		!#zh 圆形半径 */
+		radius: number;	
+	}	
+	/** !#en Collider component base class.
+	!#zh 碰撞组件基类 */
+	export class Collider extends Component {		
+		/** !#en Tag. If a node has several collider components, you can judge which type of collider is collided according to the tag.
+		!#zh 标签。当一个节点上有多个碰撞组件时，在发生碰撞后，可以使用此标签来判断是节点上的哪个碰撞组件被碰撞了。 */
+		tag: number;	
+	}	
+	/** !#en
+	A simple collision manager class.
+	It will calculate whether the collider collides other colliders, if collides then call the callbacks.
+	!#zh
+	一个简单的碰撞组件管理类，用于处理节点之间的碰撞组件是否产生了碰撞，并调用相应回调函数。 */
+	export class CollisionManager implements EventTarget {		
+		/** !#en
+		!#zh
+		是否开启碰撞管理，默认为不开启 */
+		enabled: boolean;		
+		/** !#en
+		!#zh
+		是否绘制碰撞组件的包围盒，默认为不绘制 */
+		enabledDrawBoundingBox: boolean;		
+		/** !#en
+		!#zh
+		是否绘制碰撞组件的形状，默认为不绘制 */
+		enabledDebugDraw: boolean;		
+		/**
+		!#en
+		Register an callback of a specific event type on the EventTarget.
+		!#zh
+		注册事件目标的特定事件类型回调。
+		@param type A string representing the event type to listen for.
+		@param callback The callback that will be invoked when the event is dispatched.
+		                             The callback is ignored if it is a duplicate (the callbacks are unique).
+		@param target The target to invoke the callback, can be null
+		@param useCapture When set to true, the capture argument prevents callback
+		                             from being invoked when the event's eventPhase attribute value is BUBBLING_PHASE.
+		                             When false, callback will NOT be invoked when event's eventPhase attribute value is CAPTURING_PHASE.
+		                             Either way, callback will be invoked when event's eventPhase attribute value is AT_TARGET.
+		
+		@example 
+		```js
+		node.on(cc.Node.EventType.TOUCH_END, function (event) {
+		    cc.log("this is callback");
+		}, node);
+		``` 
+		*/
+		on(type: string, callback: (event: Event.EventCustom) => void, target?: any, useCapture?: boolean): (event: Event.EventCustom) => void;
+		on<T>(type: string, callback: (event: T) => void, target?: any, useCapture?: boolean): (event: T) => void;		
+		/**
+		!#en
+		Removes the callback previously registered with the same type, callback, target and or useCapture.
+		!#zh
+		删除之前与同类型，回调，目标或 useCapture 注册的回调。
+		@param type A string representing the event type being removed.
+		@param callback The callback to remove.
+		@param target The target to invoke the callback, if it's not given, only callback without target will be removed
+		@param useCapture Specifies whether the callback being removed was registered as a capturing callback or not.
+		                             If not specified, useCapture defaults to false. If a callback was registered twice,
+		                             one with capture and one without, each must be removed separately. Removal of a capturing callback
+		                             does not affect a non-capturing version of the same listener, and vice versa.
+		
+		@example 
+		```js
+		// register touchEnd eventListener
+		var touchEnd = node.on(cc.Node.EventType.TOUCH_END, function (event) {
+		    cc.log("this is callback");
+		}, node);
+		// remove touchEnd eventListener
+		node.off(cc.Node.EventType.TOUCH_END, touchEnd, node);
+		``` 
+		*/
+		off(type: string, callback: Function, target?: any, useCapture?: boolean): void;		
+		/**
+		!#en Removes all callbacks previously registered with the same target (passed as parameter).
+		This is not for removing all listeners in the current event target,
+		and this is not for removing all listeners the target parameter have registered.
+		It's only for removing all listeners (callback and target couple) registered on the current event target by the target parameter.
+		!#zh 在当前 EventTarget 上删除指定目标（target 参数）注册的所有事件监听器。
+		这个函数无法删除当前 EventTarget 的所有事件监听器，也无法删除 target 参数所注册的所有事件监听器。
+		这个函数只能删除 target 参数在当前 EventTarget 上注册的所有事件监听器。
+		@param target The target to be searched for all related listeners 
+		*/
+		targetOff(target: any): void;		
+		/**
+		!#en
+		Register an callback of a specific event type on the EventTarget,
+		the callback will remove itself after the first time it is triggered.
+		!#zh
+		注册事件目标的特定事件类型回调，回调会在第一时间被触发后删除自身。
+		@param type A string representing the event type to listen for.
+		@param callback The callback that will be invoked when the event is dispatched.
+		                             The callback is ignored if it is a duplicate (the callbacks are unique).
+		@param target The target to invoke the callback, can be null
+		@param useCapture When set to true, the capture argument prevents callback
+		                             from being invoked when the event's eventPhase attribute value is BUBBLING_PHASE.
+		                             When false, callback will NOT be invoked when event's eventPhase attribute value is CAPTURING_PHASE.
+		                             Either way, callback will be invoked when event's eventPhase attribute value is AT_TARGET.
+		
+		@example 
+		```js
+		node.once(cc.Node.EventType.TOUCH_END, function (event) {
+		    cc.log("this is callback");
+		}, node);
+		``` 
+		*/
+		once(type: string, callback: (event: Event.EventCustom) => void, target?: any, useCapture?: boolean): (event: Event.EventCustom) => void;
+		once<T>(type: string, callback: (event: T) => void, target?: any, useCapture?: boolean): (event: T) => void;		
+		/**
+		!#en
+		Dispatches an event into the event flow.
+		The event target is the EventTarget object upon which the dispatchEvent() method is called.
+		!#zh 分发事件到事件流中。
+		@param event The Event object that is dispatched into the event flow 
+		*/
+		dispatchEvent(event: Event): void;		
+		/**
+		!#en
+		Send an event to this object directly, this method will not propagate the event to any other objects.
+		The event will be created from the supplied message, you can get the "detail" argument from event.detail.
+		!#zh
+		该对象直接发送事件， 这种方法不会对事件传播到任何其他对象。
+		@param message the message to send
+		@param detail whatever argument the message needs 
+		*/
+		emit(message: string, detail?: any): void;	
+	}	
+	/** !#en Intersection helper class
+	!#zh 辅助类，用于测试形状与形状是否相交 */
+	export class Intersection {		
+		/**
+		!#en Test line and line
+		!#zh 测试线段与线段是否相交
+		@param a1 The start point of the first line
+		@param a2 The end point of the first line
+		@param b1 The start point of the second line
+		@param b2 The end point of the second line 
+		*/
+		static lineLine(a1: Vec2, a2: Vec2, b1: Vec2, b2: Vec2): boolean;		
+		/**
+		!#en Test line and rect
+		!#zh 测试线段与矩形是否相交
+		@param a1 The start point of the line
+		@param a2 The end point of the line
+		@param b The rect 
+		*/
+		static lineRect(a1: Vec2, a2: Vec2, b: Rect): boolean;		
+		/**
+		!#en Test line and polygon
+		!#zh 测试线段与多边形是否相交
+		@param a1 The start point of the line
+		@param a2 The end point of the line
+		@param b The polygon, a set of points 
+		*/
+		static linePolygon(a1: Vec2, a2: Vec2, b: Vec2[]): boolean;		
+		/**
+		!#en Test rect and rect
+		!#zh 测试矩形与矩形是否相交
+		@param a The first rect
+		@param b The second rect 
+		*/
+		static rectRect(a: Rect, b: Rect): boolean;		
+		/**
+		!#en Test rect and polygon
+		!#zh 测试矩形与多边形是否相交
+		@param a The rect
+		@param b The polygon, a set of points 
+		*/
+		static rectPolygon(a: Rect, b: Vec2[]): boolean;		
+		/**
+		!#en Test polygon and polygon
+		!#zh 测试多边形与多边形是否相交
+		@param a The first polygon, a set of points
+		@param b The second polygon, a set of points 
+		*/
+		static polygonPolygon(a: Vec2[], b: Vec2[]): boolean;		
+		/**
+		!#en Test circle and circle
+		!#zh 测试圆形与圆形是否相交
+		@param a Object contains position and radius
+		@param b Object contains position and radius 
+		*/
+		static circleCircle(a: {position: Vec2, radius: number}, b: {position: Vec2, radius: number}): boolean;		
+		/**
+		!#en Test polygon and circle
+		!#zh 测试矩形与圆形是否相交
+		@param polygon The Polygon, a set of points
+		@param circle Object contains position and radius 
+		*/
+		static polygonCircle(polygon: Vec2[], circle: {position: Vec2, radius: number}): boolean;		
+		/**
+		!#en Test whether the point is in the polygon
+		!#zh 测试一个点是否在一个多边形中
+		@param point The point
+		@param polygon The polygon, a set of points 
+		*/
+		static pointInPolygon(point: Vec2, polygon: Vec2[]): boolean;		
+		/**
+		!#en Calculate the distance of point to line.
+		!#zh 计算点到直线的距离。如果这是一条线段并且垂足不在线段内，则会计算点到线段端点的距离。
+		@param point The point
+		@param start The start point of line
+		@param end The end point of line
+		@param isSegment whether this line is a segment 
+		*/
+		static pointLineDistance(point: Vec2, start: Vec2, end: Vec2, isSegment: boolean): boolean;	
+	}	
+	/** !#en Polygon Collider.
+	!#zh 多边形碰撞组件 */
+	export class PolygonCollider extends Component {		
+		/** !#en Position offset
+		!#zh 位置偏移量 */
+		offset: Vec2;		
+		/** !#en Polygon points
+		!#zh 多边形顶点数组 */
+		points: [Vec2];	
+	}	
 	/** !#en The animation component is used to play back animations.
 	
 	Animation provide several events to register：
@@ -7211,242 +7588,6 @@ declare module cc {
 		*/
 		updateAlignment(): void;	
 	}	
-	/** !#en Box Collider.
-	!#zh 包围盒碰撞组件 */
-	export class BoxCollider extends Component {		
-		/** !#en Position offset
-		!#zh 位置偏移量 */
-		offset: Vec2;		
-		/** !#en Box size
-		!#zh 包围盒大小 */
-		size: Size;	
-	}	
-	/** !#en Circle Collider.
-	!#zh 圆形碰撞组件 */
-	export class CircleCollider extends Component {		
-		/** !#en Position offset
-		!#zh 位置偏移量 */
-		offset: Vec2;		
-		/** !#en Circle radius
-		!#zh 圆形半径 */
-		radius: number;	
-	}	
-	/** !#en Collider component base class.
-	!#zh 碰撞组件基类 */
-	export class Collider extends Component {		
-		/** !#en Tag. If a node has several collider components, you can judge which type of collider is collided according to the tag.
-		!#zh 标签。当一个节点上有多个碰撞组件时，在发生碰撞后，可以使用此标签来判断是节点上的哪个碰撞组件被碰撞了。 */
-		tag: number;	
-	}	
-	/** !#en
-	A simple collision manager class.
-	It will calculate whether the collider collides other colliders, if collides then call the callbacks.
-	!#zh
-	一个简单的碰撞组件管理类，用于处理节点之间的碰撞组件是否产生了碰撞，并调用相应回调函数。 */
-	export class CollisionManager implements EventTarget {		
-		/** !#en
-		!#zh
-		是否开启碰撞管理，默认为不开启 */
-		enabled: boolean;		
-		/** !#en
-		!#zh
-		是否绘制碰撞组件的包围盒，默认为不绘制 */
-		enabledDrawBoundingBox: boolean;		
-		/** !#en
-		!#zh
-		是否绘制碰撞组件的形状，默认为不绘制 */
-		enabledDebugDraw: boolean;		
-		/**
-		!#en
-		Register an callback of a specific event type on the EventTarget.
-		!#zh
-		注册事件目标的特定事件类型回调。
-		@param type A string representing the event type to listen for.
-		@param callback The callback that will be invoked when the event is dispatched.
-		                             The callback is ignored if it is a duplicate (the callbacks are unique).
-		@param target The target to invoke the callback, can be null
-		@param useCapture When set to true, the capture argument prevents callback
-		                             from being invoked when the event's eventPhase attribute value is BUBBLING_PHASE.
-		                             When false, callback will NOT be invoked when event's eventPhase attribute value is CAPTURING_PHASE.
-		                             Either way, callback will be invoked when event's eventPhase attribute value is AT_TARGET.
-		
-		@example 
-		```js
-		node.on(cc.Node.EventType.TOUCH_END, function (event) {
-		    cc.log("this is callback");
-		}, node);
-		``` 
-		*/
-		on(type: string, callback: (event: Event.EventCustom) => void, target?: any, useCapture?: boolean): (event: Event.EventCustom) => void;
-		on<T>(type: string, callback: (event: T) => void, target?: any, useCapture?: boolean): (event: T) => void;		
-		/**
-		!#en
-		Removes the callback previously registered with the same type, callback, target and or useCapture.
-		!#zh
-		删除之前与同类型，回调，目标或 useCapture 注册的回调。
-		@param type A string representing the event type being removed.
-		@param callback The callback to remove.
-		@param target The target to invoke the callback, if it's not given, only callback without target will be removed
-		@param useCapture Specifies whether the callback being removed was registered as a capturing callback or not.
-		                             If not specified, useCapture defaults to false. If a callback was registered twice,
-		                             one with capture and one without, each must be removed separately. Removal of a capturing callback
-		                             does not affect a non-capturing version of the same listener, and vice versa.
-		
-		@example 
-		```js
-		// register touchEnd eventListener
-		var touchEnd = node.on(cc.Node.EventType.TOUCH_END, function (event) {
-		    cc.log("this is callback");
-		}, node);
-		// remove touchEnd eventListener
-		node.off(cc.Node.EventType.TOUCH_END, touchEnd, node);
-		``` 
-		*/
-		off(type: string, callback: Function, target?: any, useCapture?: boolean): void;		
-		/**
-		!#en Removes all callbacks previously registered with the same target (passed as parameter).
-		This is not for removing all listeners in the current event target,
-		and this is not for removing all listeners the target parameter have registered.
-		It's only for removing all listeners (callback and target couple) registered on the current event target by the target parameter.
-		!#zh 在当前 EventTarget 上删除指定目标（target 参数）注册的所有事件监听器。
-		这个函数无法删除当前 EventTarget 的所有事件监听器，也无法删除 target 参数所注册的所有事件监听器。
-		这个函数只能删除 target 参数在当前 EventTarget 上注册的所有事件监听器。
-		@param target The target to be searched for all related listeners 
-		*/
-		targetOff(target: any): void;		
-		/**
-		!#en
-		Register an callback of a specific event type on the EventTarget,
-		the callback will remove itself after the first time it is triggered.
-		!#zh
-		注册事件目标的特定事件类型回调，回调会在第一时间被触发后删除自身。
-		@param type A string representing the event type to listen for.
-		@param callback The callback that will be invoked when the event is dispatched.
-		                             The callback is ignored if it is a duplicate (the callbacks are unique).
-		@param target The target to invoke the callback, can be null
-		@param useCapture When set to true, the capture argument prevents callback
-		                             from being invoked when the event's eventPhase attribute value is BUBBLING_PHASE.
-		                             When false, callback will NOT be invoked when event's eventPhase attribute value is CAPTURING_PHASE.
-		                             Either way, callback will be invoked when event's eventPhase attribute value is AT_TARGET.
-		
-		@example 
-		```js
-		node.once(cc.Node.EventType.TOUCH_END, function (event) {
-		    cc.log("this is callback");
-		}, node);
-		``` 
-		*/
-		once(type: string, callback: (event: Event.EventCustom) => void, target?: any, useCapture?: boolean): (event: Event.EventCustom) => void;
-		once<T>(type: string, callback: (event: T) => void, target?: any, useCapture?: boolean): (event: T) => void;		
-		/**
-		!#en
-		Dispatches an event into the event flow.
-		The event target is the EventTarget object upon which the dispatchEvent() method is called.
-		!#zh 分发事件到事件流中。
-		@param event The Event object that is dispatched into the event flow 
-		*/
-		dispatchEvent(event: Event): void;		
-		/**
-		!#en
-		Send an event to this object directly, this method will not propagate the event to any other objects.
-		The event will be created from the supplied message, you can get the "detail" argument from event.detail.
-		!#zh
-		该对象直接发送事件， 这种方法不会对事件传播到任何其他对象。
-		@param message the message to send
-		@param detail whatever argument the message needs 
-		*/
-		emit(message: string, detail?: any): void;	
-	}	
-	/** !#en Intersection helper class
-	!#zh 辅助类，用于测试形状与形状是否相交 */
-	export class Intersection {		
-		/**
-		!#en Test line and line
-		!#zh 测试线段与线段是否相交
-		@param a1 The start point of the first line
-		@param a2 The end point of the first line
-		@param b1 The start point of the second line
-		@param b2 The end point of the second line 
-		*/
-		static lineLine(a1: Vec2, a2: Vec2, b1: Vec2, b2: Vec2): boolean;		
-		/**
-		!#en Test line and rect
-		!#zh 测试线段与矩形是否相交
-		@param a1 The start point of the line
-		@param a2 The end point of the line
-		@param b The rect 
-		*/
-		static lineRect(a1: Vec2, a2: Vec2, b: Rect): boolean;		
-		/**
-		!#en Test line and polygon
-		!#zh 测试线段与多边形是否相交
-		@param a1 The start point of the line
-		@param a2 The end point of the line
-		@param b The polygon, a set of points 
-		*/
-		static linePolygon(a1: Vec2, a2: Vec2, b: Vec2[]): boolean;		
-		/**
-		!#en Test rect and rect
-		!#zh 测试矩形与矩形是否相交
-		@param a The first rect
-		@param b The second rect 
-		*/
-		static rectRect(a: Rect, b: Rect): boolean;		
-		/**
-		!#en Test rect and polygon
-		!#zh 测试矩形与多边形是否相交
-		@param a The rect
-		@param b The polygon, a set of points 
-		*/
-		static rectPolygon(a: Rect, b: Vec2[]): boolean;		
-		/**
-		!#en Test polygon and polygon
-		!#zh 测试多边形与多边形是否相交
-		@param a The first polygon, a set of points
-		@param b The second polygon, a set of points 
-		*/
-		static polygonPolygon(a: Vec2[], b: Vec2[]): boolean;		
-		/**
-		!#en Test circle and circle
-		!#zh 测试圆形与圆形是否相交
-		@param a Object contains position and radius
-		@param b Object contains position and radius 
-		*/
-		static circleCircle(a: {position: Vec2, radius: number}, b: {position: Vec2, radius: number}): boolean;		
-		/**
-		!#en Test polygon and circle
-		!#zh 测试矩形与圆形是否相交
-		@param polygon The Polygon, a set of points
-		@param circle Object contains position and radius 
-		*/
-		static polygonCircle(polygon: Vec2[], circle: {position: Vec2, radius: number}): boolean;		
-		/**
-		!#en Test whether the point is in the polygon
-		!#zh 测试一个点是否在一个多边形中
-		@param point The point
-		@param polygon The polygon, a set of points 
-		*/
-		static pointInPolygon(point: Vec2, polygon: Vec2[]): boolean;		
-		/**
-		!#en Calculate the distance of point to line.
-		!#zh 计算点到直线的距离。如果这是一条线段并且垂足不在线段内，则会计算点到线段端点的距离。
-		@param point The point
-		@param start The start point of line
-		@param end The end point of line
-		@param isSegment whether this line is a segment 
-		*/
-		static pointLineDistance(point: Vec2, start: Vec2, end: Vec2, isSegment: boolean): boolean;	
-	}	
-	/** !#en Polygon Collider.
-	!#zh 多边形碰撞组件 */
-	export class PolygonCollider extends Component {		
-		/** !#en Position offset
-		!#zh 位置偏移量 */
-		offset: Vec2;		
-		/** !#en Polygon points
-		!#zh 多边形顶点数组 */
-		points: [Vec2];	
-	}	
 	/** !#en
 	EventTarget is an object to which an event is dispatched when something has occurred.
 	Entity are the most common event targets, but other objects can be event targets too.
@@ -7677,147 +7818,6 @@ declare module cc {
 		see http://www.w3.org/TR/DOM-Level-3-Events/#event-flow
 		!#zh 冒泡阶段， 包括回程遇到到层次根节点的任何后续节点。 */
 		static BUBBLING_PHASE: number;	
-	}	
-	/** !#en
-	Base class for handling assets used in Fireball. This class can be instantiate.
-	
-	You may want to override:<br/>
-	- createNode<br/>
-	- cc.Object._serialize<br/>
-	- cc.Object._deserialize<br/>
-	!#zh
-	资源基类，该类可以被实例化。<br/>
-	
-	您可能需要重写：<br/>
-	- createNode <br/>
-	- cc.Object._serialize<br/>
-	- cc.Object._deserialize<br/> */
-	export class Asset extends RawAsset {		
-		/** !#en
-		Returns the url of this asset's first raw file, if none of rawFile exists,
-		it will returns an empty string.
-		!#zh 返回该资源的原始文件的 URL，如果不支持 RAW 文件，它将返回一个空字符串。 */
-		rawUrl: string;		
-		/** !#en
-		Returns the url of this asset's raw files, if none of rawFile exists,
-		it will returns an empty array.
-		!#zh 返回该资源的原文件的 URL 数组，如果不支持 RAW 文件，它将返回一个空数组。 */
-		rawUrls: string[];		
-		/** !#en Indicates whether its dependent raw assets can support deferred load if the owner scene (or prefab) is marked as `asyncLoadAssets`.
-		!#zh 当场景或 Prefab 被标记为 `asyncLoadAssets`，禁止延迟加载该资源所依赖的其它 RawAsset。 */
-		static preventDeferredLoadDependents: boolean;		
-		/**
-		!#en
-		Create a new node using this asset in the scene.<br/>
-		If this type of asset dont have its corresponding node type, this method should be null.
-		!#zh
-		使用该资源在场景中创建一个新节点。<br/>
-		如果这类资源没有相应的节点类型，该方法应该是空的。
-		@param callback callback 
-		*/
-		createNode(callback: (error: string, node: any) => void): void;	
-	}	
-	/** !#en Class for audio data handling.
-	!#zh 音频资源类。 */
-	export class AudioClip extends RawAsset {	
-	}	
-	/** !#en Class for BitmapFont handling.
-	!#zh 位图字体资源类。 */
-	export class BitmapFont extends RawAsset {	
-	}	
-	/** !#en Class for Font handling.
-	!#zh 字体资源类。 */
-	export class Font extends RawAsset {	
-	}	
-	/** !#en Class for LabelAtlas handling.
-	!#zh 艺术数字字体资源类。 */
-	export class LabelAtlas extends BitmapFont {	
-	}	
-	/** !#en Class for prefab handling.
-	!#zh 预制资源类。 */
-	export class Prefab extends Asset {		
-		/** the main cc.Node in the prefab */
-		data: Node;		
-		/** !#en Indicates the raw assets of this prefab can be load after prefab loaded.
-		!#zh 指示该 Prefab 依赖的资源可否在 Prefab 加载后再延迟加载。 */
-		asyncLoadAssets: boolean;		
-		/**
-		Dynamically translation prefab data into minimized code.<br/>
-		This method will be called automatically before the first time the prefab being instantiated,
-		but you can re-call to refresh the create function once you modified the original prefab data in script. 
-		*/
-		compileCreateFunction(): void;	
-	}	
-	/** !#en
-	The base class for registering asset types.
-	
-	You may want to override:
-	- createNode (static)
-	!#zh
-	注册用的资源基类。<br/>
-	你可能要重写：<br/>
-	- createNode (static) */
-	export class RawAsset extends Object {		
-		/**
-		!#en
-		Create a new node in the scene.<br/>
-		If this type of asset dont have its corresponding node type, this method should be null.
-		!#zh
-		在场景中创建一个新节点。<br/>
-		如果这类资源没有相应的节点类型，该方法应该是空的。
-		@param Info Info
-		@param callback callback 
-		*/
-		static createNodeByInfo(Info: any, callback: (error: string, node: any) => void): void;	
-	}	
-	/** !#en Class for scene handling.
-	!#zh 场景资源类。 */
-	export class SceneAsset extends Asset {		
-		scene: Scene;		
-		/** !#en Indicates the raw assets of this scene can be load after scene launched.
-		!#zh 指示该场景依赖的资源可否在场景切换后再延迟加载。 */
-		asyncLoadAssets: boolean;	
-	}	
-	/** !#en Class for script handling.
-	!#zh Script 资源类。 */
-	export class _Script extends Asset {	
-	}	
-	/** !#en Class for JavaScript handling.
-	!#zh JavaScript 资源类。 */
-	export class _JavaScript extends Asset {	
-	}	
-	/** !#en Class for coffeescript handling.
-	!#zh CoffeeScript 资源类。 */
-	export class CoffeeScript extends Asset {	
-	}	
-	/** !#en Class for TypeScript handling.
-	!#zh TypeScript 资源类。 */
-	export class TypeScript extends Asset {	
-	}	
-	/** !#en Class for sprite atlas handling.
-	!#zh 精灵图集资源类。 */
-	export class SpriteAtlas extends RawAsset {		
-		/**
-		Returns the texture of the sprite atlas 
-		*/
-		getTexture(): Texture2D;		
-		/**
-		Returns the sprite frame correspond to the given key in sprite atlas.
-		@param key key 
-		*/
-		getSpriteFrame(key: string): SpriteFrame;		
-		/**
-		Returns the sprite frames in sprite atlas. 
-		*/
-		getSpriteFrames(): [SpriteFrame];	
-	}	
-	/** !#en Class for TTFFont handling.
-	!#zh TTF 字体资源类。 */
-	export class TTFFont extends Asset {	
-	}	
-	/** !#en Class for text file.
-	!#zh 文本资源类。 */
-	export class TextAsset extends Asset {	
 	}	
 	/** !#en
 	<p>
@@ -8232,6 +8232,680 @@ declare module cc {
 		!#zh 根据当前的画线样式，填充当前或已经存在的路径。 
 		*/
 		fill(): void;	
+	}	
+	/** undefined */
+	export class WorldManifold {		
+		/** !#en
+		world contact point (point of intersection)
+		!#zh
+		碰撞点集合 */
+		points: [Vec2];		
+		/** !#en
+		world vector pointing from A to B
+		!#zh
+		世界坐标系下由 A 指向 B 的向量 */
+		normal: Vec2;	
+	}	
+	/** !#en
+	A manifold point is a contact point belonging to a contact manifold.
+	It holds details related to the geometry and dynamics of the contact points.
+	Note: the impulses are used for internal caching and may not
+	provide reliable contact forces, especially for high speed collisions.
+	!#zh
+	ManifoldPoint 是接触信息中的接触点信息。它拥有关于几何和接触点的详细信息。
+	注意：信息中的冲量用于系统内部缓存，提供的接触力可能不是很准确，特别是高速移动中的碰撞信息。 */
+	export class ManifoldPoint {		
+		/** !#en
+		The local point usage depends on the manifold type:
+		-e_circles: the local center of circleB
+		-e_faceA: the local center of circleB or the clip point of polygonB
+		-e_faceB: the clip point of polygonA
+		!#zh
+		本地坐标点的用途取决于 manifold 的类型
+		- e_circles: circleB 的本地中心点
+		- e_faceA: circleB 的本地中心点 或者是 polygonB 的截取点
+		- e_faceB: polygonB 的截取点 */
+		localPoint: Vec2;		
+		/** !#en
+		Normal impulse.
+		!#zh
+		法线冲量。 */
+		normalImpulse: number;		
+		/** !#en
+		Tangent impulse.
+		!#zh
+		切线冲量。 */
+		tangentImpulse: number;	
+	}	
+	/** undefined */
+	export class Manifold {		
+		/** !#en
+		Manifold type :  0: e_circles, 1: e_faceA, 2: e_faceB
+		!#zh
+		Manifold 类型 :  0: e_circles, 1: e_faceA, 2: e_faceB */
+		type: number;		
+		/** !#en
+		The local point usage depends on the manifold type:
+		-e_circles: the local center of circleA
+		-e_faceA: the center of faceA
+		-e_faceB: the center of faceB
+		!#zh
+		用途取决于 manifold 类型
+		-e_circles: circleA 的本地中心点
+		-e_faceA: faceA 的本地中心点
+		-e_faceB: faceB 的本地中心点 */
+		localPoint: Vec2;		
+		/** !#en
+		-e_circles: not used
+		-e_faceA: the normal on polygonA
+		-e_faceB: the normal on polygonB
+		!#zh
+		-e_circles: 没被使用到
+		-e_faceA: polygonA 的法向量
+		-e_faceB: polygonB 的法向量 */
+		localNormal: Vec2;		
+		/** !#en
+		the points of contact.
+		!#zh
+		接触点信息。 */
+		points: [ManifoldPoint];	
+	}	
+	/** !#en
+	Contact impulses for reporting.
+	!#zh
+	用于返回给回调的接触冲量。 */
+	export class PhysicsImpulse {		
+		/** !#en
+		Normal impulses.
+		!#zh
+		法线方向的冲量 */
+		normalImpulses: void;		
+		/** !#en
+		Tangent impulses
+		!#zh
+		切线方向的冲量 */
+		tangentImpulses: void;	
+	}	
+	/** !#en
+	PhysicsContact will be generated during begin and end collision as a parameter of the collision callback.
+	Note that contacts will be reused for speed up cpu time, so do not cache anything in the contact.
+	!#zh
+	物理接触会在开始和结束碰撞之间生成，并作为参数传入到碰撞回调函数中。
+	注意：传入的物理接触会被系统进行重用，所以不要在使用中缓存里面的任何信息。 */
+	export class PhysicsContact {		
+		/**
+		!#en
+		Get the world manifold.
+		!#zh
+		获取世界坐标系下的碰撞信息。 
+		*/
+		getWorldManifold(): WorldManifold;		
+		/**
+		!#en
+		Get the manifold.
+		!#zh
+		获取世界坐标系下的碰撞信息。 
+		*/
+		getManifold(): Manifold;		
+		/**
+		!#en
+		Get the impulses.
+		Note: PhysicsImpulse can only used in onPostSolve callback.
+		!#zh
+		获取冲量信息
+		注意：这个信息只有在 onPostSolve 回调中才能获取到 
+		*/
+		getImpulse(): PhysicsImpulse;		
+		colliderA: Collider;		
+		colliderB: Collider;		
+		/** !#en
+		If set disabled to true, the contact will be ignored until contact end.
+		If you just want to disabled contact for current time step or sub-step, please use disabledOnce.
+		!#zh
+		如果 disabled 被设置为 true，那么直到接触结束此接触都将被忽略。
+		如果只是希望在当前时间步或子步中忽略此接触，请使用 disabledOnce 。 */
+		disabled: boolean;		
+		/** !#en
+		Disabled contact for current time step or sub-step.
+		!#zh
+		在当前时间步或子步中忽略此接触。 */
+		disabledOnce: boolean;		
+		/**
+		!#en
+		Is this contact touching?
+		!#zh
+		返回碰撞体是否已经接触到。 
+		*/
+		isTouching(): boolean;		
+		/**
+		!#en
+		Set the desired tangent speed for a conveyor belt behavior.
+		!#zh
+		为传送带设置期望的切线速度
+		@param tangentSpeed tangentSpeed 
+		*/
+		setTangentSpeed(tangentSpeed: number): void;		
+		/**
+		!#en
+		Get the desired tangent speed.
+		!#zh
+		获取切线速度 
+		*/
+		getTangentSpeed(): number;		
+		/**
+		!#en
+		Override the default friction mixture. You can call this in onPreSolve callback.
+		!#zh
+		覆盖默认的摩擦力系数。你可以在 onPreSolve 回调中调用此函数。
+		@param friction friction 
+		*/
+		setFriction(friction: number): void;		
+		/**
+		!#en
+		Get the friction.
+		!#zh
+		获取当前摩擦力系数 
+		*/
+		getFriction(): number;		
+		/**
+		!#en
+		Reset the friction mixture to the default value.
+		!#zh
+		重置摩擦力系数到默认值 
+		*/
+		resetFriction(): void;		
+		/**
+		!#en
+		Override the default restitution mixture. You can call this in onPreSolve callback.
+		!#zh
+		覆盖默认的恢复系数。你可以在 onPreSolve 回调中调用此函数。
+		@param restitution restitution 
+		*/
+		setRestitution(restitution: number): void;		
+		/**
+		!#en
+		Get the restitution.
+		!#zh
+		获取当前恢复系数 
+		*/
+		getRestitution(): number;		
+		/**
+		!#en
+		Reset the restitution mixture to the default value.
+		!#zh
+		重置恢复系数到默认值 
+		*/
+		resetRestitution(): void;	
+	}	
+	/** !#en
+	Physics manager uses box2d as the inner physics system, and hide most box2d implement details(creating rigidbody, synchronize rigidbody info to node).
+	You can visit some common box2d function through physics manager(hit testing, raycast, debug info).
+	Physics manager distributes the collision information to each collision callback when collision is produced.
+	Note: You need first enable the collision listener in the rigidbody.
+	!#zh
+	物理系统将 box2d 作为内部物理系统，并且隐藏了大部分 box2d 实现细节（比如创建刚体，同步刚体信息到节点中等）。
+	你可以通过物理系统访问一些 box2d 常用的功能，比如点击测试，射线测试，设置测试信息等。
+	物理系统还管理碰撞信息的分发，她会在产生碰撞时，将碰撞信息分发到各个碰撞回调中。
+	注意：你需要先在刚体中开启碰撞接听才会产生相应的碰撞回调。 */
+	export class PhysicsManager implements EventTarget {		
+		/** !#en
+		The draw bits for drawing physics debug information.
+		!#zh
+		指定物理系统需要绘制哪些调试信息。 */
+		static DrawBits: DrawBits;		
+		/** !#en
+		The ratio transform between physics unit and pixel unit, generally is 32.
+		!#zh
+		物理单位与像素单位互相转换的比率，一般是 32。 */
+		static PTM_RATIO: number;		
+		/**
+		!#en
+		Test which collider contains the given world point
+		!#zh
+		获取包含给定世界坐标系点的碰撞体
+		@param point the world point 
+		*/
+		testPoint(point: Vec2): PhysicsCollider;		
+		/**
+		!#en
+		Test which colliders intersect the given world rect
+		!#zh
+		获取与给定世界坐标系矩形相交的碰撞体
+		@param rect the world rect 
+		*/
+		testAABB(rect: Rect): [PhysicsCollider];		
+		/**
+		!#en
+		Raycast the world for all colliders in the path of the ray.
+		The raycast ignores colliders that contain the starting point.
+		!#zh
+		检测哪些碰撞体在给定射线的路径上，射线检测将忽略包含起始点的碰撞体。
+		@param p1 start point of the raycast
+		@param p2 end point of the raycast
+		@param type optional, default is RayCastType.Closest 
+		*/
+		rayCast(p1: Vec2, p2: Vec2, type: RayCastType): [PhysicsRayCastResult];		
+		/**
+		!#en
+		Attach physics debug draw to camera
+		!#zh
+		将物理的调试绘制信息附加到指定摄像机上
+		@param camera camera 
+		*/
+		attachDebugDrawToCamera(camera: Camera): void;		
+		/**
+		!#en
+		Detach physics debug draw to camera
+		!#zh
+		将物理的调试绘制信息从指定摄像机上移除
+		@param camera camera 
+		*/
+		detachDebugDrawFromCamera(camera: Camera): void;		
+		/** !#en
+		Enabled the physics manager?
+		!#zh
+		指定是否启用物理系统？ */
+		enabled: boolean;		
+		/** !#en
+		Debug draw flags.
+		!#zh
+		设置调试绘制标志 */
+		debugDrawFlags: number;		
+		/** !#en
+		The physics world gravity.
+		!#zh
+		物理世界重力值 */
+		gravity: number;		
+		/**
+		!#en
+		Register an callback of a specific event type on the EventTarget.
+		!#zh
+		注册事件目标的特定事件类型回调。
+		@param type A string representing the event type to listen for.
+		@param callback The callback that will be invoked when the event is dispatched.
+		                             The callback is ignored if it is a duplicate (the callbacks are unique).
+		@param target The target to invoke the callback, can be null
+		@param useCapture When set to true, the capture argument prevents callback
+		                             from being invoked when the event's eventPhase attribute value is BUBBLING_PHASE.
+		                             When false, callback will NOT be invoked when event's eventPhase attribute value is CAPTURING_PHASE.
+		                             Either way, callback will be invoked when event's eventPhase attribute value is AT_TARGET.
+		
+		@example 
+		```js
+		node.on(cc.Node.EventType.TOUCH_END, function (event) {
+		    cc.log("this is callback");
+		}, node);
+		``` 
+		*/
+		on(type: string, callback: (event: Event.EventCustom) => void, target?: any, useCapture?: boolean): (event: Event.EventCustom) => void;
+		on<T>(type: string, callback: (event: T) => void, target?: any, useCapture?: boolean): (event: T) => void;		
+		/**
+		!#en
+		Removes the callback previously registered with the same type, callback, target and or useCapture.
+		!#zh
+		删除之前与同类型，回调，目标或 useCapture 注册的回调。
+		@param type A string representing the event type being removed.
+		@param callback The callback to remove.
+		@param target The target to invoke the callback, if it's not given, only callback without target will be removed
+		@param useCapture Specifies whether the callback being removed was registered as a capturing callback or not.
+		                             If not specified, useCapture defaults to false. If a callback was registered twice,
+		                             one with capture and one without, each must be removed separately. Removal of a capturing callback
+		                             does not affect a non-capturing version of the same listener, and vice versa.
+		
+		@example 
+		```js
+		// register touchEnd eventListener
+		var touchEnd = node.on(cc.Node.EventType.TOUCH_END, function (event) {
+		    cc.log("this is callback");
+		}, node);
+		// remove touchEnd eventListener
+		node.off(cc.Node.EventType.TOUCH_END, touchEnd, node);
+		``` 
+		*/
+		off(type: string, callback: Function, target?: any, useCapture?: boolean): void;		
+		/**
+		!#en Removes all callbacks previously registered with the same target (passed as parameter).
+		This is not for removing all listeners in the current event target,
+		and this is not for removing all listeners the target parameter have registered.
+		It's only for removing all listeners (callback and target couple) registered on the current event target by the target parameter.
+		!#zh 在当前 EventTarget 上删除指定目标（target 参数）注册的所有事件监听器。
+		这个函数无法删除当前 EventTarget 的所有事件监听器，也无法删除 target 参数所注册的所有事件监听器。
+		这个函数只能删除 target 参数在当前 EventTarget 上注册的所有事件监听器。
+		@param target The target to be searched for all related listeners 
+		*/
+		targetOff(target: any): void;		
+		/**
+		!#en
+		Register an callback of a specific event type on the EventTarget,
+		the callback will remove itself after the first time it is triggered.
+		!#zh
+		注册事件目标的特定事件类型回调，回调会在第一时间被触发后删除自身。
+		@param type A string representing the event type to listen for.
+		@param callback The callback that will be invoked when the event is dispatched.
+		                             The callback is ignored if it is a duplicate (the callbacks are unique).
+		@param target The target to invoke the callback, can be null
+		@param useCapture When set to true, the capture argument prevents callback
+		                             from being invoked when the event's eventPhase attribute value is BUBBLING_PHASE.
+		                             When false, callback will NOT be invoked when event's eventPhase attribute value is CAPTURING_PHASE.
+		                             Either way, callback will be invoked when event's eventPhase attribute value is AT_TARGET.
+		
+		@example 
+		```js
+		node.once(cc.Node.EventType.TOUCH_END, function (event) {
+		    cc.log("this is callback");
+		}, node);
+		``` 
+		*/
+		once(type: string, callback: (event: Event.EventCustom) => void, target?: any, useCapture?: boolean): (event: Event.EventCustom) => void;
+		once<T>(type: string, callback: (event: T) => void, target?: any, useCapture?: boolean): (event: T) => void;		
+		/**
+		!#en
+		Dispatches an event into the event flow.
+		The event target is the EventTarget object upon which the dispatchEvent() method is called.
+		!#zh 分发事件到事件流中。
+		@param event The Event object that is dispatched into the event flow 
+		*/
+		dispatchEvent(event: Event): void;		
+		/**
+		!#en
+		Send an event to this object directly, this method will not propagate the event to any other objects.
+		The event will be created from the supplied message, you can get the "detail" argument from event.detail.
+		!#zh
+		该对象直接发送事件， 这种方法不会对事件传播到任何其他对象。
+		@param message the message to send
+		@param detail whatever argument the message needs 
+		*/
+		emit(message: string, detail?: any): void;	
+	}	
+	/** undefined */
+	export enum DrawBits {		
+		e_aabbBit = 0,
+		e_pairBit = 0,
+		e_centerOfMassBit = 0,
+		e_jointBit = 0,
+		e_shapeBit = 0,	
+	}	
+	/** undefined */
+	export class PhysicsRayCastResult {		
+		/** !#en
+		The PhysicsCollider which intersects with the raycast
+		!#zh
+		与射线相交的碰撞体 */
+		collider: PhysicsCollider;		
+		/** !#en
+		The intersection point
+		!#zh
+		射线与碰撞体相交的点 */
+		point: Vec2;		
+		/** !#en
+		The normal vector at the point of intersection
+		!#zh
+		射线与碰撞体相交的点的法向量 */
+		normal: Vec2;		
+		/** !#en
+		The fraction of the raycast path at the point of intersection
+		!#zh
+		射线与碰撞体相交的点占射线长度的分数 */
+		fraction: number;	
+	}	
+	/** !#en Enum for RigidBodyType.
+	!#zh 刚体类型 */
+	export enum RigidBodyType {		
+		Static = 0,
+		Kinematic = 0,
+		Dynamic = 0,
+		Animated = 0,	
+	}	
+	/** !#en Enum for RayCastType.
+	!#zh 射线检测类型 */
+	export enum RayCastType {		
+		Closest = 0,
+		Any = 0,
+		AllClosest = 0,
+		All = 0,	
+	}	
+	/** undefined */
+	export class RigidBody extends Component {		
+		/** !#en
+		Should enabled contact listener?
+		When a collision is trigger, the collision callback will only be called when enabled contact listener.
+		!#zh
+		是否启用接触接听器。
+		当 collider 产生碰撞时，只有开启了接触接听器才会调用相应的回调函数 */
+		enabledContactListener: boolean;		
+		/**
+		!#en
+		Collision callback.
+		Called when two collider begin to touch.
+		!#zh
+		碰撞回调。
+		如果你的脚本中实现了这个函数，那么它将会在两个碰撞体开始接触时被调用。
+		@param contact contact information
+		@param selfCollider the collider belong to this rigidbody
+		@param otherCollider the collider belong to another rigidbody 
+		*/
+		onBeginContact(contact: PhysicsContact, selfCollider: PhysicsCollider, otherCollider: PhysicsCollider): void;		
+		/**
+		!#en
+		Collision callback.
+		Called when two collider cease to touch.
+		!#zh
+		碰撞回调。
+		如果你的脚本中实现了这个函数，那么它将会在两个碰撞体停止接触时被调用。
+		@param contact contact information
+		@param selfCollider the collider belong to this rigidbody
+		@param otherCollider the collider belong to another rigidbody 
+		*/
+		onEndContact(contact: PhysicsContact, selfCollider: PhysicsCollider, otherCollider: PhysicsCollider): void;		
+		/**
+		!#en
+		Collision callback.
+		This is called when a contact is updated.
+		This allows you to inspect a contact before it goes to the solver(e.g. disable contact).
+		Note: this is called only for awake bodies.
+		Note: this is called even when the number of contact points is zero.
+		Note: this is not called for sensors.
+		!#zh
+		碰撞回调。
+		如果你的脚本中实现了这个函数，那么它将会在接触更新时被调用。
+		你可以在接触被处理前根据他包含的信息作出相应的处理，比如将这个接触禁用掉。
+		注意：回调只会为醒着的刚体调用。
+		注意：接触点为零的时候也有可能被调用。
+		注意：感知体(sensor)的回调不会被调用。
+		@param contact contact information
+		@param selfCollider the collider belong to this rigidbody
+		@param otherCollider the collider belong to another rigidbody 
+		*/
+		onPreSolve(contact: PhysicsContact, selfCollider: PhysicsCollider, otherCollider: PhysicsCollider): void;		
+		/**
+		!#en
+		Collision callback.
+		This is called after a contact is updated.
+		You can get the impulses from the contact in this callback.
+		!#zh
+		碰撞回调。
+		如果你的脚本中实现了这个函数，那么它将会在接触更新完后被调用。
+		你可以在这个回调中从接触信息中获取到冲量信息。
+		@param contact contact information
+		@param selfCollider the collider belong to this rigidbody
+		@param otherCollider the collider belong to another rigidbody 
+		*/
+		onEndSolve(contact: PhysicsContact, selfCollider: PhysicsCollider, otherCollider: PhysicsCollider): void;		
+		/** !#en
+		Is this a fast moving body that should be prevented from tunneling through
+		other moving bodies?
+		Note :
+		- All bodies are prevented from tunneling through kinematic and static bodies. This setting is only considered on dynamic bodies.
+		- You should use this flag sparingly since it increases processing time.
+		!#zh
+		这个刚体是否是一个快速移动的刚体，并且需要禁止穿过其他快速移动的刚体？
+		需要注意的是 :
+		 - 所有刚体都被禁止从 运动刚体 和 静态刚体 中穿过。此选项只关注于 动态刚体。
+		 - 应该尽量少的使用此选项，因为它会增加程序处理时间。 */
+		bullet: boolean;		
+		/** !#en
+		Rigidbody type : Static, Kinematic, Dynamic or Animated.
+		!#zh
+		刚体类型： Static, Kinematic, Dynamic or Animated. */
+		type: RigidBodyType;		
+		/** !#en
+		Set this flag to false if this body should never fall asleep.
+		Note that this increases CPU usage.
+		!#zh
+		如果此刚体永远都不应该进入睡眠，那么设置这个属性为 false。
+		需要注意这将使 CPU 占用率提高。 */
+		allowSleep: boolean;		
+		/** !#en
+		Scale the gravity applied to this body.
+		!#zh
+		缩放应用在此刚体上的重力值 */
+		gravityScale: number;		
+		/** !#en
+		Linear damping is use to reduce the linear velocity.
+		The damping parameter can be larger than 1, but the damping effect becomes sensitive to the
+		time step when the damping parameter is large.
+		!#zh
+		Linear damping 用于衰减刚体的线性速度。衰减系数可以大于 1，但是当衰减系数比较大的时候，衰减的效果会变得比较敏感。 */
+		linearDamping: number;		
+		/** !#en
+		Angular damping is use to reduce the angular velocity. The damping parameter
+		can be larger than 1 but the damping effect becomes sensitive to the
+		time step when the damping parameter is large.
+		!#zh
+		Angular damping 用于衰减刚体的角速度。衰减系数可以大于 1，但是当衰减系数比较大的时候，衰减的效果会变得比较敏感。 */
+		angularDamping: number;		
+		/** !#en
+		The linear velocity of the body's origin in world co-ordinates.
+		!#zh
+		刚体在世界坐标下的线性速度 */
+		linearVelocity: Vec2;		
+		/** !#en
+		The angular velocity of the body.
+		!#zh
+		刚体的角速度 */
+		angularVelocity: number;		
+		/** !#en
+		Should this body be prevented from rotating?
+		!#zh
+		是否禁止此刚体进行旋转 */
+		fixedRotation: boolean;		
+		/** !#en
+		Is this body initially awake or sleeping?
+		!#zh
+		是否立刻唤醒此刚体 */
+		awake: boolean;		
+		/** !#en
+		Set the active state of the body. An inactive body is not
+		simulated and cannot be collided with or woken up.
+		If body is active, all fixtures will be added to the
+		broad-phase.
+		If body is inactive, all fixtures will be removed from
+		the broad-phase and all contacts will be destroyed.
+		Fixtures on an inactive body are implicitly inactive and will
+		not participate in collisions, ray-casts, or queries.
+		Joints connected to an inactive body are implicitly inactive.
+		!#zh
+		设置刚体的激活状态。一个非激活状态下的刚体是不会被模拟和碰撞的，不管它是否处于睡眠状态下。
+		如果刚体处于激活状态下，所有夹具会被添加到 粗测阶段（broad-phase）。
+		如果刚体处于非激活状态下，所有夹具会被从 粗测阶段（broad-phase）中移除。
+		在非激活状态下的夹具不会参与到碰撞，射线，或者查找中
+		链接到非激活状态下刚体的关节也是非激活的。 */
+		active: boolean;		
+		/**
+		!#en
+		Gets a local point relative to the body's origin given a world point.
+		!#zh
+		将一个给定的世界坐标系下的点转换为刚体本地坐标系下的点
+		@param worldPoint a point in world coordinates.
+		@param out optional, the receiving point 
+		*/
+		getLocalPoint(worldPoint: Vec2, out: Vec2): Vec2;		
+		/**
+		!#en
+		Get the world coordinates of a point given the local coordinates.
+		!#zh
+		将一个给定的刚体本地坐标系下的点转换为世界坐标系下的点
+		@param localPoint a point in local coordinates.
+		@param out optional, the receiving point 
+		*/
+		getWorldPoint(localPoint: Vec2, out: Vec2): Vec2;		
+		/**
+		!#en
+		Get the world coordinates of a vector given the local coordinates.
+		!#zh
+		将一个给定的世界坐标系下的向量转换为刚体本地坐标系下的向量
+		@param localVector a vector in world coordinates.
+		@param out optional, the receiving vector 
+		*/
+		getWorldVector(localVector: Vec2, out: Vec2): Vec2;		
+		/**
+		!#en
+		Gets a local vector relative to the body's origin given a world vector.
+		!#zh
+		将一个给定的世界坐标系下的点转换为刚体本地坐标系下的点
+		@param worldVector a vector in world coordinates.
+		@param out optional, the receiving vector 
+		*/
+		getLocalVector(worldVector: Vec2, out: Vec2): Vec2;		
+		/**
+		!#en
+		Get the world body origin position.
+		!#zh
+		获取刚体世界坐标系下的原点值
+		@param out optional, the receiving point 
+		*/
+		getWorldPosition(out: Vec2): Vec2;		
+		/**
+		!#en
+		Get the world body rotation angle.
+		!#zh
+		获取刚体世界坐标系下的旋转值。 
+		*/
+		getWorldRotation(): number;		
+		/**
+		!#en
+		Get the local position of the center of mass.
+		!#zh
+		获取刚体本地坐标系下的质心 
+		*/
+		getLocalCenter(): Vec2;		
+		/**
+		!#en
+		Get the world position of the center of mass.
+		!#zh
+		获取刚体世界坐标系下的质心 
+		*/
+		getWorldCenter(): Vec2;		
+		/**
+		!#en
+		Get the world linear velocity of a world point attached to this body.
+		!#zh
+		获取刚体上指定点的线性速度
+		@param worldPoint a point in world coordinates.
+		@param out optional, the receiving point 
+		*/
+		getLinearVelocityFromWorldPoint(worldPoint: Vec2, out: Vec2): Vec2;		
+		/**
+		!#en
+		Get total mass of the body.
+		!#zh
+		获取刚体的质量。 
+		*/
+		getMass(): number;		
+		/**
+		!#en
+		Get the rotational inertia of the body about the local origin.
+		!#zh
+		获取刚体本地坐标系下原点的旋转惯性 
+		*/
+		getInertia(): number;		
+		/**
+		!#en
+		Get all the joints connect to the rigidbody.
+		!#zh
+		获取链接到此刚体的所有关节 
+		*/
+		getInertia(): [Joint];	
 	}	
 	/** Loader for resource loading process. It's a singleton object. */
 	export class loader extends Pipeline {		
@@ -8933,910 +9607,6 @@ declare module cc {
 		!#zh 清空当前 pipeline，该函数将清理 items。 
 		*/
 		clear(): void;	
-	}	
-	/** undefined */
-	export class WorldManifold {		
-		/** !#en
-		world contact point (point of intersection)
-		!#zh
-		碰撞点集合 */
-		points: [Vec2];		
-		/** !#en
-		world vector pointing from A to B
-		!#zh
-		世界坐标系下由 A 指向 B 的向量 */
-		normal: Vec2;	
-	}	
-	/** !#en
-	A manifold point is a contact point belonging to a contact manifold.
-	It holds details related to the geometry and dynamics of the contact points.
-	Note: the impulses are used for internal caching and may not
-	provide reliable contact forces, especially for high speed collisions.
-	!#zh
-	ManifoldPoint 是接触信息中的接触点信息。它拥有关于几何和接触点的详细信息。
-	注意：信息中的冲量用于系统内部缓存，提供的接触力可能不是很准确，特别是高速移动中的碰撞信息。 */
-	export class ManifoldPoint {		
-		/** !#en
-		The local point usage depends on the manifold type:
-		-e_circles: the local center of circleB
-		-e_faceA: the local center of circleB or the clip point of polygonB
-		-e_faceB: the clip point of polygonA
-		!#zh
-		本地坐标点的用途取决于 manifold 的类型
-		- e_circles: circleB 的本地中心点
-		- e_faceA: circleB 的本地中心点 或者是 polygonB 的截取点
-		- e_faceB: polygonB 的截取点 */
-		localPoint: Vec2;		
-		/** !#en
-		Normal impulse.
-		!#zh
-		法线冲量。 */
-		normalImpulse: number;		
-		/** !#en
-		Tangent impulse.
-		!#zh
-		切线冲量。 */
-		tangentImpulse: number;	
-	}	
-	/** undefined */
-	export class Manifold {		
-		/** !#en
-		Manifold type :  0: e_circles, 1: e_faceA, 2: e_faceB
-		!#zh
-		Manifold 类型 :  0: e_circles, 1: e_faceA, 2: e_faceB */
-		type: number;		
-		/** !#en
-		The local point usage depends on the manifold type:
-		-e_circles: the local center of circleA
-		-e_faceA: the center of faceA
-		-e_faceB: the center of faceB
-		!#zh
-		用途取决于 manifold 类型
-		-e_circles: circleA 的本地中心点
-		-e_faceA: faceA 的本地中心点
-		-e_faceB: faceB 的本地中心点 */
-		localPoint: Vec2;		
-		/** !#en
-		-e_circles: not used
-		-e_faceA: the normal on polygonA
-		-e_faceB: the normal on polygonB
-		!#zh
-		-e_circles: 没被使用到
-		-e_faceA: polygonA 的法向量
-		-e_faceB: polygonB 的法向量 */
-		localNormal: Vec2;		
-		/** !#en
-		the points of contact.
-		!#zh
-		接触点信息。 */
-		points: [ManifoldPoint];	
-	}	
-	/** !#en
-	Contact impulses for reporting.
-	!#zh
-	用于返回给回调的接触冲量。 */
-	export class PhysicsImpulse {		
-		/** !#en
-		Normal impulses.
-		!#zh
-		法线方向的冲量 */
-		normalImpulses: void;		
-		/** !#en
-		Tangent impulses
-		!#zh
-		切线方向的冲量 */
-		tangentImpulses: void;	
-	}	
-	/** !#en
-	PhysicsContact will be generated during begin and end collision as a parameter of the collision callback.
-	Note that contacts will be reused for speed up cpu time, so do not cache anything in the contact.
-	!#zh
-	物理接触会在开始和结束碰撞之间生成，并作为参数传入到碰撞回调函数中。
-	注意：传入的物理接触会被系统进行重用，所以不要在使用中缓存里面的任何信息。 */
-	export class PhysicsContact {		
-		/**
-		!#en
-		Get the world manifold.
-		!#zh
-		获取世界坐标系下的碰撞信息。 
-		*/
-		getWorldManifold(): WorldManifold;		
-		/**
-		!#en
-		Get the manifold.
-		!#zh
-		获取世界坐标系下的碰撞信息。 
-		*/
-		getManifold(): Manifold;		
-		/**
-		!#en
-		Get the impulses.
-		Note: PhysicsImpulse can only used in onPostSolve callback.
-		!#zh
-		获取冲量信息
-		注意：这个信息只有在 onPostSolve 回调中才能获取到 
-		*/
-		getImpulse(): PhysicsImpulse;		
-		colliderA: Collider;		
-		colliderB: Collider;		
-		/** !#en
-		If set disabled to true, the contact will be ignored until contact end.
-		If you just want to disabled contact for current time step or sub-step, please use disabledOnce.
-		!#zh
-		如果 disabled 被设置为 true，那么直到接触结束此接触都将被忽略。
-		如果只是希望在当前时间步或子步中忽略此接触，请使用 disabledOnce 。 */
-		disabled: boolean;		
-		/** !#en
-		Disabled contact for current time step or sub-step.
-		!#zh
-		在当前时间步或子步中忽略此接触。 */
-		disabledOnce: boolean;		
-		/**
-		!#en
-		Is this contact touching?
-		!#zh
-		返回碰撞体是否已经接触到。 
-		*/
-		isTouching(): boolean;		
-		/**
-		!#en
-		Set the desired tangent speed for a conveyor belt behavior.
-		!#zh
-		为传送带设置期望的切线速度
-		@param tangentSpeed tangentSpeed 
-		*/
-		setTangentSpeed(tangentSpeed: number): void;		
-		/**
-		!#en
-		Get the desired tangent speed.
-		!#zh
-		获取切线速度 
-		*/
-		getTangentSpeed(): number;		
-		/**
-		!#en
-		Override the default friction mixture. You can call this in onPreSolve callback.
-		!#zh
-		覆盖默认的摩擦力系数。你可以在 onPreSolve 回调中调用此函数。
-		@param friction friction 
-		*/
-		setFriction(friction: number): void;		
-		/**
-		!#en
-		Get the friction.
-		!#zh
-		获取当前摩擦力系数 
-		*/
-		getFriction(): number;		
-		/**
-		!#en
-		Reset the friction mixture to the default value.
-		!#zh
-		重置摩擦力系数到默认值 
-		*/
-		resetFriction(): void;		
-		/**
-		!#en
-		Override the default restitution mixture. You can call this in onPreSolve callback.
-		!#zh
-		覆盖默认的恢复系数。你可以在 onPreSolve 回调中调用此函数。
-		@param restitution restitution 
-		*/
-		setRestitution(restitution: number): void;		
-		/**
-		!#en
-		Get the restitution.
-		!#zh
-		获取当前恢复系数 
-		*/
-		getRestitution(): number;		
-		/**
-		!#en
-		Reset the restitution mixture to the default value.
-		!#zh
-		重置恢复系数到默认值 
-		*/
-		resetRestitution(): void;	
-	}	
-	/** !#en
-	Physics manager uses box2d as the inner physics system, and hide most box2d implement details(creating rigidbody, synchronize rigidbody info to node).
-	You can visit some common box2d function through physics manager(hit testing, raycast, debug info).
-	Physics manager distributes the collision information to each collision callback when collision is produced.
-	Note: You need first enable the collision listener in the rigidbody.
-	!#zh
-	物理系统将 box2d 作为内部物理系统，并且隐藏了大部分 box2d 实现细节（比如创建刚体，同步刚体信息到节点中等）。
-	你可以通过物理系统访问一些 box2d 常用的功能，比如点击测试，射线测试，设置测试信息等。
-	物理系统还管理碰撞信息的分发，她会在产生碰撞时，将碰撞信息分发到各个碰撞回调中。
-	注意：你需要先在刚体中开启碰撞接听才会产生相应的碰撞回调。 */
-	export class PhysicsManager implements EventTarget {		
-		/** !#en
-		The draw bits for drawing physics debug information.
-		!#zh
-		指定物理系统需要绘制哪些调试信息。 */
-		static DrawBits: DrawBits;		
-		/** !#en
-		The ratio transform between physics unit and pixel unit, generally is 32.
-		!#zh
-		物理单位与像素单位互相转换的比率，一般是 32。 */
-		static PTM_RATIO: number;		
-		/**
-		!#en
-		Test which collider contains the given world point
-		!#zh
-		获取包含给定世界坐标系点的碰撞体
-		@param point the world point 
-		*/
-		testPoint(point: Vec2): PhysicsCollider;		
-		/**
-		!#en
-		Test which colliders intersect the given world rect
-		!#zh
-		获取与给定世界坐标系矩形相交的碰撞体
-		@param rect the world rect 
-		*/
-		testAABB(rect: Rect): [PhysicsCollider];		
-		/**
-		!#en
-		Raycast the world for all colliders in the path of the ray.
-		The raycast ignores colliders that contain the starting point.
-		!#zh
-		检测哪些碰撞体在给定射线的路径上，射线检测将忽略包含起始点的碰撞体。
-		@param p1 start point of the raycast
-		@param p2 end point of the raycast
-		@param type optional, default is RayCastType.Closest 
-		*/
-		rayCast(p1: Vec2, p2: Vec2, type: RayCastType): [PhysicsRayCastResult];		
-		/**
-		!#en
-		Attach physics debug draw to camera
-		!#zh
-		将物理的调试绘制信息附加到指定摄像机上
-		@param camera camera 
-		*/
-		attachDebugDrawToCamera(camera: Camera): void;		
-		/**
-		!#en
-		Detach physics debug draw to camera
-		!#zh
-		将物理的调试绘制信息从指定摄像机上移除
-		@param camera camera 
-		*/
-		detachDebugDrawFromCamera(camera: Camera): void;		
-		/** !#en
-		Enabled the physics manager?
-		!#zh
-		指定是否启用物理系统？ */
-		enabled: boolean;		
-		/** !#en
-		Debug draw flags.
-		!#zh
-		设置调试绘制标志 */
-		debugDrawFlags: number;		
-		/** !#en
-		The physics world gravity.
-		!#zh
-		物理世界重力值 */
-		gravity: number;		
-		/**
-		!#en
-		Register an callback of a specific event type on the EventTarget.
-		!#zh
-		注册事件目标的特定事件类型回调。
-		@param type A string representing the event type to listen for.
-		@param callback The callback that will be invoked when the event is dispatched.
-		                             The callback is ignored if it is a duplicate (the callbacks are unique).
-		@param target The target to invoke the callback, can be null
-		@param useCapture When set to true, the capture argument prevents callback
-		                             from being invoked when the event's eventPhase attribute value is BUBBLING_PHASE.
-		                             When false, callback will NOT be invoked when event's eventPhase attribute value is CAPTURING_PHASE.
-		                             Either way, callback will be invoked when event's eventPhase attribute value is AT_TARGET.
-		
-		@example 
-		```js
-		node.on(cc.Node.EventType.TOUCH_END, function (event) {
-		    cc.log("this is callback");
-		}, node);
-		``` 
-		*/
-		on(type: string, callback: (event: Event.EventCustom) => void, target?: any, useCapture?: boolean): (event: Event.EventCustom) => void;
-		on<T>(type: string, callback: (event: T) => void, target?: any, useCapture?: boolean): (event: T) => void;		
-		/**
-		!#en
-		Removes the callback previously registered with the same type, callback, target and or useCapture.
-		!#zh
-		删除之前与同类型，回调，目标或 useCapture 注册的回调。
-		@param type A string representing the event type being removed.
-		@param callback The callback to remove.
-		@param target The target to invoke the callback, if it's not given, only callback without target will be removed
-		@param useCapture Specifies whether the callback being removed was registered as a capturing callback or not.
-		                             If not specified, useCapture defaults to false. If a callback was registered twice,
-		                             one with capture and one without, each must be removed separately. Removal of a capturing callback
-		                             does not affect a non-capturing version of the same listener, and vice versa.
-		
-		@example 
-		```js
-		// register touchEnd eventListener
-		var touchEnd = node.on(cc.Node.EventType.TOUCH_END, function (event) {
-		    cc.log("this is callback");
-		}, node);
-		// remove touchEnd eventListener
-		node.off(cc.Node.EventType.TOUCH_END, touchEnd, node);
-		``` 
-		*/
-		off(type: string, callback: Function, target?: any, useCapture?: boolean): void;		
-		/**
-		!#en Removes all callbacks previously registered with the same target (passed as parameter).
-		This is not for removing all listeners in the current event target,
-		and this is not for removing all listeners the target parameter have registered.
-		It's only for removing all listeners (callback and target couple) registered on the current event target by the target parameter.
-		!#zh 在当前 EventTarget 上删除指定目标（target 参数）注册的所有事件监听器。
-		这个函数无法删除当前 EventTarget 的所有事件监听器，也无法删除 target 参数所注册的所有事件监听器。
-		这个函数只能删除 target 参数在当前 EventTarget 上注册的所有事件监听器。
-		@param target The target to be searched for all related listeners 
-		*/
-		targetOff(target: any): void;		
-		/**
-		!#en
-		Register an callback of a specific event type on the EventTarget,
-		the callback will remove itself after the first time it is triggered.
-		!#zh
-		注册事件目标的特定事件类型回调，回调会在第一时间被触发后删除自身。
-		@param type A string representing the event type to listen for.
-		@param callback The callback that will be invoked when the event is dispatched.
-		                             The callback is ignored if it is a duplicate (the callbacks are unique).
-		@param target The target to invoke the callback, can be null
-		@param useCapture When set to true, the capture argument prevents callback
-		                             from being invoked when the event's eventPhase attribute value is BUBBLING_PHASE.
-		                             When false, callback will NOT be invoked when event's eventPhase attribute value is CAPTURING_PHASE.
-		                             Either way, callback will be invoked when event's eventPhase attribute value is AT_TARGET.
-		
-		@example 
-		```js
-		node.once(cc.Node.EventType.TOUCH_END, function (event) {
-		    cc.log("this is callback");
-		}, node);
-		``` 
-		*/
-		once(type: string, callback: (event: Event.EventCustom) => void, target?: any, useCapture?: boolean): (event: Event.EventCustom) => void;
-		once<T>(type: string, callback: (event: T) => void, target?: any, useCapture?: boolean): (event: T) => void;		
-		/**
-		!#en
-		Dispatches an event into the event flow.
-		The event target is the EventTarget object upon which the dispatchEvent() method is called.
-		!#zh 分发事件到事件流中。
-		@param event The Event object that is dispatched into the event flow 
-		*/
-		dispatchEvent(event: Event): void;		
-		/**
-		!#en
-		Send an event to this object directly, this method will not propagate the event to any other objects.
-		The event will be created from the supplied message, you can get the "detail" argument from event.detail.
-		!#zh
-		该对象直接发送事件， 这种方法不会对事件传播到任何其他对象。
-		@param message the message to send
-		@param detail whatever argument the message needs 
-		*/
-		emit(message: string, detail?: any): void;	
-	}	
-	/** undefined */
-	export enum DrawBits {		
-		e_aabbBit = 0,
-		e_pairBit = 0,
-		e_centerOfMassBit = 0,
-		e_jointBit = 0,
-		e_shapeBit = 0,	
-	}	
-	/** undefined */
-	export class PhysicsRayCastResult {		
-		/** !#en
-		The PhysicsCollider which intersects with the raycast
-		!#zh
-		与射线相交的碰撞体 */
-		collider: PhysicsCollider;		
-		/** !#en
-		The intersection point
-		!#zh
-		射线与碰撞体相交的点 */
-		point: Vec2;		
-		/** !#en
-		The normal vector at the point of intersection
-		!#zh
-		射线与碰撞体相交的点的法向量 */
-		normal: Vec2;		
-		/** !#en
-		The fraction of the raycast path at the point of intersection
-		!#zh
-		射线与碰撞体相交的点占射线长度的分数 */
-		fraction: number;	
-	}	
-	/** !#en Enum for RigidBodyType.
-	!#zh 刚体类型 */
-	export enum RigidBodyType {		
-		Static = 0,
-		Kinematic = 0,
-		Dynamic = 0,
-		Animated = 0,	
-	}	
-	/** !#en Enum for RayCastType.
-	!#zh 射线检测类型 */
-	export enum RayCastType {		
-		Closest = 0,
-		Any = 0,
-		AllClosest = 0,
-		All = 0,	
-	}	
-	/** undefined */
-	export class RigidBody extends Component {		
-		/** !#en
-		Should enabled contact listener?
-		When a collision is trigger, the collision callback will only be called when enabled contact listener.
-		!#zh
-		是否启用接触接听器。
-		当 collider 产生碰撞时，只有开启了接触接听器才会调用相应的回调函数 */
-		enabledContactListener: boolean;		
-		/**
-		!#en
-		Collision callback.
-		Called when two collider begin to touch.
-		!#zh
-		碰撞回调。
-		如果你的脚本中实现了这个函数，那么它将会在两个碰撞体开始接触时被调用。
-		@param contact contact information
-		@param selfCollider the collider belong to this rigidbody
-		@param otherCollider the collider belong to another rigidbody 
-		*/
-		onBeginContact(contact: PhysicsContact, selfCollider: PhysicsCollider, otherCollider: PhysicsCollider): void;		
-		/**
-		!#en
-		Collision callback.
-		Called when two collider cease to touch.
-		!#zh
-		碰撞回调。
-		如果你的脚本中实现了这个函数，那么它将会在两个碰撞体停止接触时被调用。
-		@param contact contact information
-		@param selfCollider the collider belong to this rigidbody
-		@param otherCollider the collider belong to another rigidbody 
-		*/
-		onEndContact(contact: PhysicsContact, selfCollider: PhysicsCollider, otherCollider: PhysicsCollider): void;		
-		/**
-		!#en
-		Collision callback.
-		This is called when a contact is updated.
-		This allows you to inspect a contact before it goes to the solver(e.g. disable contact).
-		Note: this is called only for awake bodies.
-		Note: this is called even when the number of contact points is zero.
-		Note: this is not called for sensors.
-		!#zh
-		碰撞回调。
-		如果你的脚本中实现了这个函数，那么它将会在接触更新时被调用。
-		你可以在接触被处理前根据他包含的信息作出相应的处理，比如将这个接触禁用掉。
-		注意：回调只会为醒着的刚体调用。
-		注意：接触点为零的时候也有可能被调用。
-		注意：感知体(sensor)的回调不会被调用。
-		@param contact contact information
-		@param selfCollider the collider belong to this rigidbody
-		@param otherCollider the collider belong to another rigidbody 
-		*/
-		onPreSolve(contact: PhysicsContact, selfCollider: PhysicsCollider, otherCollider: PhysicsCollider): void;		
-		/**
-		!#en
-		Collision callback.
-		This is called after a contact is updated.
-		You can get the impulses from the contact in this callback.
-		!#zh
-		碰撞回调。
-		如果你的脚本中实现了这个函数，那么它将会在接触更新完后被调用。
-		你可以在这个回调中从接触信息中获取到冲量信息。
-		@param contact contact information
-		@param selfCollider the collider belong to this rigidbody
-		@param otherCollider the collider belong to another rigidbody 
-		*/
-		onEndSolve(contact: PhysicsContact, selfCollider: PhysicsCollider, otherCollider: PhysicsCollider): void;		
-		/** !#en
-		Is this a fast moving body that should be prevented from tunneling through
-		other moving bodies?
-		Note :
-		- All bodies are prevented from tunneling through kinematic and static bodies. This setting is only considered on dynamic bodies.
-		- You should use this flag sparingly since it increases processing time.
-		!#zh
-		这个刚体是否是一个快速移动的刚体，并且需要禁止穿过其他快速移动的刚体？
-		需要注意的是 :
-		 - 所有刚体都被禁止从 运动刚体 和 静态刚体 中穿过。此选项只关注于 动态刚体。
-		 - 应该尽量少的使用此选项，因为它会增加程序处理时间。 */
-		bullet: boolean;		
-		/** !#en
-		Rigidbody type : Static, Kinematic, Dynamic or Animated.
-		!#zh
-		刚体类型： Static, Kinematic, Dynamic or Animated. */
-		type: RigidBodyType;		
-		/** !#en
-		Set this flag to false if this body should never fall asleep.
-		Note that this increases CPU usage.
-		!#zh
-		如果此刚体永远都不应该进入睡眠，那么设置这个属性为 false。
-		需要注意这将使 CPU 占用率提高。 */
-		allowSleep: boolean;		
-		/** !#en
-		Scale the gravity applied to this body.
-		!#zh
-		缩放应用在此刚体上的重力值 */
-		gravityScale: number;		
-		/** !#en
-		Linear damping is use to reduce the linear velocity.
-		The damping parameter can be larger than 1, but the damping effect becomes sensitive to the
-		time step when the damping parameter is large.
-		!#zh
-		Linear damping 用于衰减刚体的线性速度。衰减系数可以大于 1，但是当衰减系数比较大的时候，衰减的效果会变得比较敏感。 */
-		linearDamping: number;		
-		/** !#en
-		Angular damping is use to reduce the angular velocity. The damping parameter
-		can be larger than 1 but the damping effect becomes sensitive to the
-		time step when the damping parameter is large.
-		!#zh
-		Angular damping 用于衰减刚体的角速度。衰减系数可以大于 1，但是当衰减系数比较大的时候，衰减的效果会变得比较敏感。 */
-		angularDamping: number;		
-		/** !#en
-		The linear velocity of the body's origin in world co-ordinates.
-		!#zh
-		刚体在世界坐标下的线性速度 */
-		linearVelocity: Vec2;		
-		/** !#en
-		The angular velocity of the body.
-		!#zh
-		刚体的角速度 */
-		angularVelocity: number;		
-		/** !#en
-		Should this body be prevented from rotating?
-		!#zh
-		是否禁止此刚体进行旋转 */
-		fixedRotation: boolean;		
-		/** !#en
-		Is this body initially awake or sleeping?
-		!#zh
-		是否立刻唤醒此刚体 */
-		awake: boolean;		
-		/** !#en
-		Set the active state of the body. An inactive body is not
-		simulated and cannot be collided with or woken up.
-		If body is active, all fixtures will be added to the
-		broad-phase.
-		If body is inactive, all fixtures will be removed from
-		the broad-phase and all contacts will be destroyed.
-		Fixtures on an inactive body are implicitly inactive and will
-		not participate in collisions, ray-casts, or queries.
-		Joints connected to an inactive body are implicitly inactive.
-		!#zh
-		设置刚体的激活状态。一个非激活状态下的刚体是不会被模拟和碰撞的，不管它是否处于睡眠状态下。
-		如果刚体处于激活状态下，所有夹具会被添加到 粗测阶段（broad-phase）。
-		如果刚体处于非激活状态下，所有夹具会被从 粗测阶段（broad-phase）中移除。
-		在非激活状态下的夹具不会参与到碰撞，射线，或者查找中
-		链接到非激活状态下刚体的关节也是非激活的。 */
-		active: boolean;		
-		/**
-		!#en
-		Gets a local point relative to the body's origin given a world point.
-		!#zh
-		将一个给定的世界坐标系下的点转换为刚体本地坐标系下的点
-		@param worldPoint a point in world coordinates.
-		@param out optional, the receiving point 
-		*/
-		getLocalPoint(worldPoint: Vec2, out: Vec2): Vec2;		
-		/**
-		!#en
-		Get the world coordinates of a point given the local coordinates.
-		!#zh
-		将一个给定的刚体本地坐标系下的点转换为世界坐标系下的点
-		@param localPoint a point in local coordinates.
-		@param out optional, the receiving point 
-		*/
-		getWorldPoint(localPoint: Vec2, out: Vec2): Vec2;		
-		/**
-		!#en
-		Get the world coordinates of a vector given the local coordinates.
-		!#zh
-		将一个给定的世界坐标系下的向量转换为刚体本地坐标系下的向量
-		@param localVector a vector in world coordinates.
-		@param out optional, the receiving vector 
-		*/
-		getWorldVector(localVector: Vec2, out: Vec2): Vec2;		
-		/**
-		!#en
-		Gets a local vector relative to the body's origin given a world vector.
-		!#zh
-		将一个给定的世界坐标系下的点转换为刚体本地坐标系下的点
-		@param worldVector a vector in world coordinates.
-		@param out optional, the receiving vector 
-		*/
-		getLocalVector(worldVector: Vec2, out: Vec2): Vec2;		
-		/**
-		!#en
-		Get the world body origin position.
-		!#zh
-		获取刚体世界坐标系下的原点值
-		@param out optional, the receiving point 
-		*/
-		getWorldPosition(out: Vec2): Vec2;		
-		/**
-		!#en
-		Get the world body rotation angle.
-		!#zh
-		获取刚体世界坐标系下的旋转值。 
-		*/
-		getWorldRotation(): number;		
-		/**
-		!#en
-		Get the local position of the center of mass.
-		!#zh
-		获取刚体本地坐标系下的质心 
-		*/
-		getLocalCenter(): Vec2;		
-		/**
-		!#en
-		Get the world position of the center of mass.
-		!#zh
-		获取刚体世界坐标系下的质心 
-		*/
-		getWorldCenter(): Vec2;		
-		/**
-		!#en
-		Get the world linear velocity of a world point attached to this body.
-		!#zh
-		获取刚体上指定点的线性速度
-		@param worldPoint a point in world coordinates.
-		@param out optional, the receiving point 
-		*/
-		getLinearVelocityFromWorldPoint(worldPoint: Vec2, out: Vec2): Vec2;		
-		/**
-		!#en
-		Get total mass of the body.
-		!#zh
-		获取刚体的质量。 
-		*/
-		getMass(): number;		
-		/**
-		!#en
-		Get the rotational inertia of the body about the local origin.
-		!#zh
-		获取刚体本地坐标系下原点的旋转惯性 
-		*/
-		getInertia(): number;		
-		/**
-		!#en
-		Get all the joints connect to the rigidbody.
-		!#zh
-		获取链接到此刚体的所有关节 
-		*/
-		getInertia(): [Joint];	
-	}	
-	/** !#en
-	A cc.SpriteFrame has:<br/>
-	 - texture: A cc.Texture2D that will be used by the _ccsg.Sprite<br/>
-	 - rectangle: A rectangle of the texture
-	
-	!#zh
-	一个 SpriteFrame 包含：<br/>
-	 - 纹理：会被 Sprite 使用的 Texture2D 对象。<br/>
-	 - 矩形：在纹理中的矩形区域。 */
-	export class SpriteFrame extends Asset implements EventTarget {		
-		/**
-		!#en
-		Constructor of SpriteFrame class.
-		!#zh
-		SpriteFrame 类的构造函数。
-		@param filename filename
-		@param rect rect
-		@param rotated Whether the frame is rotated in the texture
-		@param offset The offset of the frame in the texture
-		@param originalSize The size of the frame in the texture 
-		*/
-		constructor(filename?: string|Texture2D, rect?: Rect, rotated?: boolean, offset?: Vec2, originalSize?: Size);		
-		/** !#en Top border of the sprite
-		!#zh sprite 的顶部边框 */
-		insetTop: number;		
-		/** !#en Bottom border of the sprite
-		!#zh sprite 的底部边框 */
-		insetBottom: number;		
-		/** !#en Left border of the sprite
-		!#zh sprite 的左边边框 */
-		insetLeft: number;		
-		/** !#en Right border of the sprite
-		!#zh sprite 的左边边框 */
-		insetRight: number;		
-		/**
-		!#en Returns whether the texture have been loaded
-		!#zh 返回是否已加载纹理 
-		*/
-		textureLoaded(): boolean;		
-		/**
-		Add a event listener for texture loaded event.
-		@param callback callback
-		@param target target 
-		*/
-		addLoadedEventListener(callback: Function, target: any): void;		
-		/**
-		!#en Returns whether the sprite frame is rotated in the texture.
-		!#zh 获取 SpriteFrame 是否旋转 
-		*/
-		isRotated(): boolean;		
-		/**
-		!#en Set whether the sprite frame is rotated in the texture.
-		!#zh 设置 SpriteFrame 是否旋转
-		@param bRotated bRotated 
-		*/
-		setRotated(bRotated: boolean): void;		
-		/**
-		!#en Returns the rect of the sprite frame in the texture.
-		!#zh 获取 SpriteFrame 的纹理矩形区域 
-		*/
-		getRect(): Rect;		
-		/**
-		!#en Sets the rect of the sprite frame in the texture.
-		!#zh 设置 SpriteFrame 的纹理矩形区域
-		@param rect rect 
-		*/
-		setRect(rect: Rect): void;		
-		/**
-		!#en Returns the original size of the trimmed image.
-		!#zh 获取修剪前的原始大小 
-		*/
-		getOriginalSize(): Size;		
-		/**
-		!#en Sets the original size of the trimmed image.
-		!#zh 设置修剪前的原始大小
-		@param size size 
-		*/
-		setOriginalSize(size: Size): void;		
-		/**
-		!#en Returns the texture of the frame.
-		!#zh 获取使用的纹理实例 
-		*/
-		getTexture(): Texture2D;		
-		/**
-		!#en Returns the offset of the frame in the texture.
-		!#zh 获取偏移量 
-		*/
-		getOffset(): Vec2;		
-		/**
-		!#en Sets the offset of the frame in the texture.
-		!#zh 设置偏移量
-		@param offsets offsets 
-		*/
-		setOffset(offsets: Vec2): void;		
-		/**
-		!#en Clone the sprite frame.
-		!#zh 克隆 SpriteFrame 
-		*/
-		clone(): SpriteFrame;		
-		/**
-		#en Set SpriteFrame with Texture, rect, rotated, offset and originalSize.<br/>
-		#zh 通过 Texture，rect，rotated，offset 和 originalSize 设置 SpriteFrame
-		@param textureOrTextureFile textureOrTextureFile
-		@param rect rect
-		@param rotated rotated
-		@param offset offset
-		@param originalSize originalSize 
-		*/
-		setTexture(textureOrTextureFile: string|Texture2D, rect?: Rect, rotated?: boolean, offset?: Vec2, originalSize?: Size): boolean;		
-		/**
-		!#en If a loading scene (or prefab) is marked as `asyncLoadAssets`, all the textures of the SpriteFrame which
-		associated by user's custom Components in the scene, will not preload automatically.
-		These textures will be load when Sprite component is going to render the SpriteFrames.
-		You can call this method if you want to load the texture early.
-		!#zh 当加载中的场景或 Prefab 被标记为 `asyncLoadAssets` 时，用户在场景中由自定义组件关联到的所有 SpriteFrame 的贴图都不会被提前加载。
-		只有当 Sprite 组件要渲染这些 SpriteFrame 时，才会检查贴图是否加载。如果你希望加载过程提前，你可以手工调用这个方法。
-		
-		@example 
-		```js
-		if (spriteFrame.textureLoaded()) {
-		    this._onSpriteFrameLoaded();
-		}
-		else {
-		    spriteFrame.once('load', this._onSpriteFrameLoaded, this);
-		    spriteFrame.ensureLoadTexture();
-		}
-		``` 
-		*/
-		ensureLoadTexture(): void;		
-		/**
-		!#en
-		Register an callback of a specific event type on the EventTarget.
-		!#zh
-		注册事件目标的特定事件类型回调。
-		@param type A string representing the event type to listen for.
-		@param callback The callback that will be invoked when the event is dispatched.
-		                             The callback is ignored if it is a duplicate (the callbacks are unique).
-		@param target The target to invoke the callback, can be null
-		@param useCapture When set to true, the capture argument prevents callback
-		                             from being invoked when the event's eventPhase attribute value is BUBBLING_PHASE.
-		                             When false, callback will NOT be invoked when event's eventPhase attribute value is CAPTURING_PHASE.
-		                             Either way, callback will be invoked when event's eventPhase attribute value is AT_TARGET.
-		
-		@example 
-		```js
-		node.on(cc.Node.EventType.TOUCH_END, function (event) {
-		    cc.log("this is callback");
-		}, node);
-		``` 
-		*/
-		on(type: string, callback: (event: Event.EventCustom) => void, target?: any, useCapture?: boolean): (event: Event.EventCustom) => void;
-		on<T>(type: string, callback: (event: T) => void, target?: any, useCapture?: boolean): (event: T) => void;		
-		/**
-		!#en
-		Removes the callback previously registered with the same type, callback, target and or useCapture.
-		!#zh
-		删除之前与同类型，回调，目标或 useCapture 注册的回调。
-		@param type A string representing the event type being removed.
-		@param callback The callback to remove.
-		@param target The target to invoke the callback, if it's not given, only callback without target will be removed
-		@param useCapture Specifies whether the callback being removed was registered as a capturing callback or not.
-		                             If not specified, useCapture defaults to false. If a callback was registered twice,
-		                             one with capture and one without, each must be removed separately. Removal of a capturing callback
-		                             does not affect a non-capturing version of the same listener, and vice versa.
-		
-		@example 
-		```js
-		// register touchEnd eventListener
-		var touchEnd = node.on(cc.Node.EventType.TOUCH_END, function (event) {
-		    cc.log("this is callback");
-		}, node);
-		// remove touchEnd eventListener
-		node.off(cc.Node.EventType.TOUCH_END, touchEnd, node);
-		``` 
-		*/
-		off(type: string, callback: Function, target?: any, useCapture?: boolean): void;		
-		/**
-		!#en Removes all callbacks previously registered with the same target (passed as parameter).
-		This is not for removing all listeners in the current event target,
-		and this is not for removing all listeners the target parameter have registered.
-		It's only for removing all listeners (callback and target couple) registered on the current event target by the target parameter.
-		!#zh 在当前 EventTarget 上删除指定目标（target 参数）注册的所有事件监听器。
-		这个函数无法删除当前 EventTarget 的所有事件监听器，也无法删除 target 参数所注册的所有事件监听器。
-		这个函数只能删除 target 参数在当前 EventTarget 上注册的所有事件监听器。
-		@param target The target to be searched for all related listeners 
-		*/
-		targetOff(target: any): void;		
-		/**
-		!#en
-		Register an callback of a specific event type on the EventTarget,
-		the callback will remove itself after the first time it is triggered.
-		!#zh
-		注册事件目标的特定事件类型回调，回调会在第一时间被触发后删除自身。
-		@param type A string representing the event type to listen for.
-		@param callback The callback that will be invoked when the event is dispatched.
-		                             The callback is ignored if it is a duplicate (the callbacks are unique).
-		@param target The target to invoke the callback, can be null
-		@param useCapture When set to true, the capture argument prevents callback
-		                             from being invoked when the event's eventPhase attribute value is BUBBLING_PHASE.
-		                             When false, callback will NOT be invoked when event's eventPhase attribute value is CAPTURING_PHASE.
-		                             Either way, callback will be invoked when event's eventPhase attribute value is AT_TARGET.
-		
-		@example 
-		```js
-		node.once(cc.Node.EventType.TOUCH_END, function (event) {
-		    cc.log("this is callback");
-		}, node);
-		``` 
-		*/
-		once(type: string, callback: (event: Event.EventCustom) => void, target?: any, useCapture?: boolean): (event: Event.EventCustom) => void;
-		once<T>(type: string, callback: (event: T) => void, target?: any, useCapture?: boolean): (event: T) => void;		
-		/**
-		!#en
-		Dispatches an event into the event flow.
-		The event target is the EventTarget object upon which the dispatchEvent() method is called.
-		!#zh 分发事件到事件流中。
-		@param event The Event object that is dispatched into the event flow 
-		*/
-		dispatchEvent(event: Event): void;		
-		/**
-		!#en
-		Send an event to this object directly, this method will not propagate the event to any other objects.
-		The event will be created from the supplied message, you can get the "detail" argument from event.detail.
-		!#zh
-		该对象直接发送事件， 这种方法不会对事件传播到任何其他对象。
-		@param message the message to send
-		@param detail whatever argument the message needs 
-		*/
-		emit(message: string, detail?: any): void;	
 	}	
 	/** <p>
 	 This class manages all events of input. include: touch, mouse, accelerometer, keyboard                                       <br/>
@@ -10863,6 +10633,236 @@ declare module cc {
 		``` 
 		*/
 		static builtinRaw(url: string): string;	
+	}	
+	/** !#en
+	A cc.SpriteFrame has:<br/>
+	 - texture: A cc.Texture2D that will be used by the _ccsg.Sprite<br/>
+	 - rectangle: A rectangle of the texture
+	
+	!#zh
+	一个 SpriteFrame 包含：<br/>
+	 - 纹理：会被 Sprite 使用的 Texture2D 对象。<br/>
+	 - 矩形：在纹理中的矩形区域。 */
+	export class SpriteFrame extends Asset implements EventTarget {		
+		/**
+		!#en
+		Constructor of SpriteFrame class.
+		!#zh
+		SpriteFrame 类的构造函数。
+		@param filename filename
+		@param rect rect
+		@param rotated Whether the frame is rotated in the texture
+		@param offset The offset of the frame in the texture
+		@param originalSize The size of the frame in the texture 
+		*/
+		constructor(filename?: string|Texture2D, rect?: Rect, rotated?: boolean, offset?: Vec2, originalSize?: Size);		
+		/** !#en Top border of the sprite
+		!#zh sprite 的顶部边框 */
+		insetTop: number;		
+		/** !#en Bottom border of the sprite
+		!#zh sprite 的底部边框 */
+		insetBottom: number;		
+		/** !#en Left border of the sprite
+		!#zh sprite 的左边边框 */
+		insetLeft: number;		
+		/** !#en Right border of the sprite
+		!#zh sprite 的左边边框 */
+		insetRight: number;		
+		/**
+		!#en Returns whether the texture have been loaded
+		!#zh 返回是否已加载纹理 
+		*/
+		textureLoaded(): boolean;		
+		/**
+		Add a event listener for texture loaded event.
+		@param callback callback
+		@param target target 
+		*/
+		addLoadedEventListener(callback: Function, target: any): void;		
+		/**
+		!#en Returns whether the sprite frame is rotated in the texture.
+		!#zh 获取 SpriteFrame 是否旋转 
+		*/
+		isRotated(): boolean;		
+		/**
+		!#en Set whether the sprite frame is rotated in the texture.
+		!#zh 设置 SpriteFrame 是否旋转
+		@param bRotated bRotated 
+		*/
+		setRotated(bRotated: boolean): void;		
+		/**
+		!#en Returns the rect of the sprite frame in the texture.
+		!#zh 获取 SpriteFrame 的纹理矩形区域 
+		*/
+		getRect(): Rect;		
+		/**
+		!#en Sets the rect of the sprite frame in the texture.
+		!#zh 设置 SpriteFrame 的纹理矩形区域
+		@param rect rect 
+		*/
+		setRect(rect: Rect): void;		
+		/**
+		!#en Returns the original size of the trimmed image.
+		!#zh 获取修剪前的原始大小 
+		*/
+		getOriginalSize(): Size;		
+		/**
+		!#en Sets the original size of the trimmed image.
+		!#zh 设置修剪前的原始大小
+		@param size size 
+		*/
+		setOriginalSize(size: Size): void;		
+		/**
+		!#en Returns the texture of the frame.
+		!#zh 获取使用的纹理实例 
+		*/
+		getTexture(): Texture2D;		
+		/**
+		!#en Returns the offset of the frame in the texture.
+		!#zh 获取偏移量 
+		*/
+		getOffset(): Vec2;		
+		/**
+		!#en Sets the offset of the frame in the texture.
+		!#zh 设置偏移量
+		@param offsets offsets 
+		*/
+		setOffset(offsets: Vec2): void;		
+		/**
+		!#en Clone the sprite frame.
+		!#zh 克隆 SpriteFrame 
+		*/
+		clone(): SpriteFrame;		
+		/**
+		#en Set SpriteFrame with Texture, rect, rotated, offset and originalSize.<br/>
+		#zh 通过 Texture，rect，rotated，offset 和 originalSize 设置 SpriteFrame
+		@param textureOrTextureFile textureOrTextureFile
+		@param rect rect
+		@param rotated rotated
+		@param offset offset
+		@param originalSize originalSize 
+		*/
+		setTexture(textureOrTextureFile: string|Texture2D, rect?: Rect, rotated?: boolean, offset?: Vec2, originalSize?: Size): boolean;		
+		/**
+		!#en If a loading scene (or prefab) is marked as `asyncLoadAssets`, all the textures of the SpriteFrame which
+		associated by user's custom Components in the scene, will not preload automatically.
+		These textures will be load when Sprite component is going to render the SpriteFrames.
+		You can call this method if you want to load the texture early.
+		!#zh 当加载中的场景或 Prefab 被标记为 `asyncLoadAssets` 时，用户在场景中由自定义组件关联到的所有 SpriteFrame 的贴图都不会被提前加载。
+		只有当 Sprite 组件要渲染这些 SpriteFrame 时，才会检查贴图是否加载。如果你希望加载过程提前，你可以手工调用这个方法。
+		
+		@example 
+		```js
+		if (spriteFrame.textureLoaded()) {
+		    this._onSpriteFrameLoaded();
+		}
+		else {
+		    spriteFrame.once('load', this._onSpriteFrameLoaded, this);
+		    spriteFrame.ensureLoadTexture();
+		}
+		``` 
+		*/
+		ensureLoadTexture(): void;		
+		/**
+		!#en
+		Register an callback of a specific event type on the EventTarget.
+		!#zh
+		注册事件目标的特定事件类型回调。
+		@param type A string representing the event type to listen for.
+		@param callback The callback that will be invoked when the event is dispatched.
+		                             The callback is ignored if it is a duplicate (the callbacks are unique).
+		@param target The target to invoke the callback, can be null
+		@param useCapture When set to true, the capture argument prevents callback
+		                             from being invoked when the event's eventPhase attribute value is BUBBLING_PHASE.
+		                             When false, callback will NOT be invoked when event's eventPhase attribute value is CAPTURING_PHASE.
+		                             Either way, callback will be invoked when event's eventPhase attribute value is AT_TARGET.
+		
+		@example 
+		```js
+		node.on(cc.Node.EventType.TOUCH_END, function (event) {
+		    cc.log("this is callback");
+		}, node);
+		``` 
+		*/
+		on(type: string, callback: (event: Event.EventCustom) => void, target?: any, useCapture?: boolean): (event: Event.EventCustom) => void;
+		on<T>(type: string, callback: (event: T) => void, target?: any, useCapture?: boolean): (event: T) => void;		
+		/**
+		!#en
+		Removes the callback previously registered with the same type, callback, target and or useCapture.
+		!#zh
+		删除之前与同类型，回调，目标或 useCapture 注册的回调。
+		@param type A string representing the event type being removed.
+		@param callback The callback to remove.
+		@param target The target to invoke the callback, if it's not given, only callback without target will be removed
+		@param useCapture Specifies whether the callback being removed was registered as a capturing callback or not.
+		                             If not specified, useCapture defaults to false. If a callback was registered twice,
+		                             one with capture and one without, each must be removed separately. Removal of a capturing callback
+		                             does not affect a non-capturing version of the same listener, and vice versa.
+		
+		@example 
+		```js
+		// register touchEnd eventListener
+		var touchEnd = node.on(cc.Node.EventType.TOUCH_END, function (event) {
+		    cc.log("this is callback");
+		}, node);
+		// remove touchEnd eventListener
+		node.off(cc.Node.EventType.TOUCH_END, touchEnd, node);
+		``` 
+		*/
+		off(type: string, callback: Function, target?: any, useCapture?: boolean): void;		
+		/**
+		!#en Removes all callbacks previously registered with the same target (passed as parameter).
+		This is not for removing all listeners in the current event target,
+		and this is not for removing all listeners the target parameter have registered.
+		It's only for removing all listeners (callback and target couple) registered on the current event target by the target parameter.
+		!#zh 在当前 EventTarget 上删除指定目标（target 参数）注册的所有事件监听器。
+		这个函数无法删除当前 EventTarget 的所有事件监听器，也无法删除 target 参数所注册的所有事件监听器。
+		这个函数只能删除 target 参数在当前 EventTarget 上注册的所有事件监听器。
+		@param target The target to be searched for all related listeners 
+		*/
+		targetOff(target: any): void;		
+		/**
+		!#en
+		Register an callback of a specific event type on the EventTarget,
+		the callback will remove itself after the first time it is triggered.
+		!#zh
+		注册事件目标的特定事件类型回调，回调会在第一时间被触发后删除自身。
+		@param type A string representing the event type to listen for.
+		@param callback The callback that will be invoked when the event is dispatched.
+		                             The callback is ignored if it is a duplicate (the callbacks are unique).
+		@param target The target to invoke the callback, can be null
+		@param useCapture When set to true, the capture argument prevents callback
+		                             from being invoked when the event's eventPhase attribute value is BUBBLING_PHASE.
+		                             When false, callback will NOT be invoked when event's eventPhase attribute value is CAPTURING_PHASE.
+		                             Either way, callback will be invoked when event's eventPhase attribute value is AT_TARGET.
+		
+		@example 
+		```js
+		node.once(cc.Node.EventType.TOUCH_END, function (event) {
+		    cc.log("this is callback");
+		}, node);
+		``` 
+		*/
+		once(type: string, callback: (event: Event.EventCustom) => void, target?: any, useCapture?: boolean): (event: Event.EventCustom) => void;
+		once<T>(type: string, callback: (event: T) => void, target?: any, useCapture?: boolean): (event: T) => void;		
+		/**
+		!#en
+		Dispatches an event into the event flow.
+		The event target is the EventTarget object upon which the dispatchEvent() method is called.
+		!#zh 分发事件到事件流中。
+		@param event The Event object that is dispatched into the event flow 
+		*/
+		dispatchEvent(event: Event): void;		
+		/**
+		!#en
+		Send an event to this object directly, this method will not propagate the event to any other objects.
+		The event will be created from the supplied message, you can get the "detail" argument from event.detail.
+		!#zh
+		该对象直接发送事件， 这种方法不会对事件传播到任何其他对象。
+		@param message the message to send
+		@param detail whatever argument the message needs 
+		*/
+		emit(message: string, detail?: any): void;	
 	}	
 	/** <p>
 	This class allows to easily create OpenGL or Canvas 2D textures from images, text or raw data.                                    <br/>
