@@ -16,7 +16,7 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
-        var timeIn = 5;
+        var timeIn = 1;
         this.schedule(function(){
             timeIn--;
             if(timeIn===0){
