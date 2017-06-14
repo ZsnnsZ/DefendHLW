@@ -137,8 +137,8 @@
     "_cascadeOpacityEnabled": true,
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.41023936170212755,
-      "y": 0.38297872340425526
+      "x": 0.5,
+      "y": 0.5
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -151,8 +151,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -86,
-      "y": -61
+      "x": 0,
+      "y": 0
     },
     "_skewX": 0,
     "_skewY": 0,
