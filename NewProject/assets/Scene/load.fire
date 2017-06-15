@@ -189,7 +189,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "New Sprite",
+    "_name": "top",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
@@ -204,7 +204,7 @@
     ],
     "_prefab": null,
     "_id": "5542dQNjpBB4ZYgbdtNhqHW",
-    "_opacity": 255,
+    "_opacity": 0,
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
@@ -251,7 +251,7 @@
       "__uuid__": "882ca664-111e-4542-8f8a-eb9053ec5423"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -288,6 +288,9 @@
     "node": {
       "__id__": 2
     },
-    "_enabled": true
+    "_enabled": true,
+    "top": {
+      "__id__": 5
+    }
   }
 ]

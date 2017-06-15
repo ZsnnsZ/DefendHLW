@@ -2,31 +2,24 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        // foo: {
-        //    default: null,      // The default value will be used only when the component attaching
-        //                           to a node for the first time
-        //    url: cc.Texture2D,  // optional, default is typeof default
-        //    serializable: true, // optional, default is true
-        //    visible: true,      // optional, default is true
-        //    displayName: 'Foo', // optional
-        //    readonly: false,    // optional, default is false
-        // },
-        // ...
+        top: cc.Node,
     },
 
     // use this for initialization
     onLoad: function () {
-        var timeIn = 1;
+        var minOpacity = 0;
+        var timeIn = 40;
         this.schedule(function(){
             timeIn--;
+            this.top.opacity = minOpacity + Math.floor(0.04*(255-minOpacity));
+            minOpacity = this.top.opacity;
             if(timeIn===0){
                 cc.director.loadScene('main');
             }
-        },1);
+        },0.05);
     },
 
     // called every frame, uncomment this function to activate update callback
     // update: function (dt) {
-
     // },
 });
