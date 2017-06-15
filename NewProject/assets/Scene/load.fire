@@ -67,6 +67,9 @@
     "_components": [
       {
         "__id__": 7
+      },
+      {
+        "__id__": 8
       }
     ],
     "_prefab": null,
@@ -87,8 +90,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 0,
-      "height": 0
+      "width": 960,
+      "height": 540
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -97,7 +100,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 480,
-      "y": 320
+      "y": 270
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -122,7 +125,7 @@
       }
     ],
     "_prefab": null,
-    "_id": "ba83do0bnBDY5S159wa7gev",
+    "_id": "543f8JHrTJGgL6g14sgQL8E",
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
@@ -149,7 +152,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": -6
+      "y": 0
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -167,7 +170,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "389cc1a8-ff61-47ff-ad52-ff9d378ce9ed"
+      "__uuid__": "1a28024a-ab6d-40b7-bd98-490dff77a3a5"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -186,7 +189,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "tiao",
+    "_name": "New Sprite",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
@@ -200,7 +203,7 @@
       }
     ],
     "_prefab": null,
-    "_id": "cb725kbfIVBAbm2YVxv+LiU",
+    "_id": "5542dQNjpBB4ZYgbdtNhqHW",
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
@@ -226,8 +229,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
+      "x": 4,
+      "y": 7
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -245,7 +248,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "7bcf4f39-5938-4f52-9e6f-5023084fdc57"
+      "__uuid__": "882ca664-111e-4542-8f8a-eb9053ec5423"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -273,9 +276,18 @@
     "_designResolution": {
       "__type__": "cc.Size",
       "width": 960,
-      "height": 640
+      "height": 540
     },
     "_fitWidth": false,
     "_fitHeight": true
+  },
+  {
+    "__type__": "e6e34fnLPNFJahER82sbJHL",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true
   }
 ]
