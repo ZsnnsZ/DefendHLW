@@ -16,13 +16,9 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
-        var timeIn = 1;
-        this.schedule(function(){
-            timeIn--;
-            if(timeIn===0){
-                cc.director.loadScene('main');
-            }
-        },1);
+        this.node.on('mousedown',function(){
+            cc.director.loadScene('load');
+        })
     },
 
     // called every frame, uncomment this function to activate update callback
