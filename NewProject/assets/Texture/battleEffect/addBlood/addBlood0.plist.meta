@@ -1,0 +1,56 @@
+{
+  "ver": "1.2.4",
+  "uuid": "cb5806b2-d76f-4b80-8468-8b8be082528a",
+  "rawTextureUuid": "8a3f4c2f-592c-4afb-9eed-57a08921ab5d",
+  "size": {
+    "width": 512,
+    "height": 512
+  },
+  "type": "Texture Packer",
+  "subMetas": {
+    "pantaoqujiafazhen.png": {
+      "ver": "1.0.3",
+      "uuid": "c27ee369-5946-4576-bc8c-cde87e2198a2",
+      "rawTextureUuid": "8a3f4c2f-592c-4afb-9eed-57a08921ab5d",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 245,
+      "height": 245,
+      "rawWidth": 245,
+      "rawHeight": 245,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "spriteType": "normal",
+      "subMetas": {}
+    },
+    "shizifazhen_pantao.png": {
+      "ver": "1.0.3",
+      "uuid": "c44efc21-b1fe-4a55-927f-17df9760607d",
+      "rawTextureUuid": "8a3f4c2f-592c-4afb-9eed-57a08921ab5d",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 245,
+      "trimY": 0,
+      "width": 211,
+      "height": 216,
+      "rawWidth": 211,
+      "rawHeight": 216,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "spriteType": "normal",
+      "subMetas": {}
+    }
+  }
+}

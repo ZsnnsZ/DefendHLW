@@ -1,28 +1,28 @@
 {
   "ver": "1.0.0",
-  "uuid": "91e9e18a-1dad-470e-931f-58a1e21f1600",
+  "uuid": "8f9b9f81-6609-4f50-8eb8-8688aa7ed9b6",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "subMetas": {
-    "pricebg1": {
+    "anniu3": {
       "ver": "1.0.3",
-      "uuid": "6e027d91-19c9-4e58-a90d-95114665a8bf",
-      "rawTextureUuid": "91e9e18a-1dad-470e-931f-58a1e21f1600",
+      "uuid": "0b8effb1-4c65-48ce-b48f-45ada162b211",
+      "rawTextureUuid": "8f9b9f81-6609-4f50-8eb8-8688aa7ed9b6",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,
-      "offsetX": -1.5,
+      "offsetX": 0,
       "offsetY": 0,
       "trimX": 0,
       "trimY": 0,
-      "width": 113,
-      "height": 23,
+      "width": 116,
+      "height": 53,
       "rawWidth": 116,
-      "rawHeight": 23,
+      "rawHeight": 53,
       "borderTop": 0,
-      "borderBottom": 1,
-      "borderLeft": 25,
+      "borderBottom": 0,
+      "borderLeft": 0,
       "borderRight": 0,
       "subMetas": {}
     }
