@@ -10,16 +10,22 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        is_debug: true,
         speed: 100,
+        state: {
+            type:State,
+            default:State.NONE,
+            visible:false,
+        },
     },
 
     // use this for initialization
-    onLoad: function () {
-
+    init: function(game) {
+        this.game = game;
+        this.state = State.WALK;
+        this.find_road();
     },
 
-    start: function() {
+    find_road: function() {
         //查找挂载了wujinBG的节点
         var bg = cc.find("Canvas/wujinBG")
         //查找组件
