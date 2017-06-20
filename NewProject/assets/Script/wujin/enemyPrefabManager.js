@@ -14,17 +14,11 @@ cc.Class({
             let enemy = cc.instantiate(this.enemyPrefab); // 创建节点
             this.enemyPool.put(enemy); // 通过 putInPool 接口放入对象池
         }
-        // for (let j = 0;j < 5; ++j)
-        // {
-        //     this.createEnemy();
 
-        // }
-        // this.schedule(function(){
-        //     this.createEnemy();
-        // }, 1, 5, 0);
-        this.createEnemy();
-        cc.delayTime(1);
-        this.createEnemy();
+        this.schedule(function(){
+            this.createEnemy();
+        }, 1, 4, 0);
+
     },
 
     createEnemy: function() {
@@ -34,8 +28,8 @@ cc.Class({
         } else { // 如果没有空闲对象，也就是对象池中备用对象不够时，我们就用 cc.instantiate 重新创建
             enemy = cc.instantiate(this.enemyPrefab);
         }
-        this.enemyLayer.addChild(enemy); // 将生成的敌人加入节点树
         enemy.getComponent('enemy').init(this.game); //接下来就可以调用 enemy 身上的脚本进行初始化
+        this.enemyLayer.addChild(enemy); // 将生成的敌人加入节点树
     },
 
     destroyEnemy: function(node) {

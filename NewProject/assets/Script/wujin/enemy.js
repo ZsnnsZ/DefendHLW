@@ -11,11 +11,13 @@ cc.Class({
 
     properties: {
         speed: 100,
+        blood: 10,
         state: {
             type:State,
             default:State.NONE,
             visible:false,
         },
+        bloodBar: cc.ProgressBar,
     },
 
     // use this for initialization
@@ -55,10 +57,9 @@ cc.Class({
         this.state = State.WALK;
         var start_pos = this.node.getPosition();
         // console.log(start_pos.x);
-        var dst_pos = this.roadset[this.next_step];
+        var dst_pos = cc.p(this.roadset[this.next_step]);
         dst_pos.x -= 480;
         dst_pos.y -= 270;
-        // console.log(dst_pos);
         //两个向量的差
         var dir = cc.pSub(dst_pos,start_pos);
         //dir的长度
@@ -92,6 +93,18 @@ cc.Class({
         if(this.now_time >= this.total_time){
             this.next_step ++;
             this.walk_next();
+            this.hurt();//测试
+        }
+    },
+
+    hurt: function () {
+        this.blood -= 2;
+        this.bloodBar.progress -= 0.2;
+        if (this.blood == 0) {
+            this.bloodBar.progress = 1;
+            this.blood = 10;
+            this.game.gainCoin();
+            this.game.enemyPrefabManager.destroyEnemy(this.node);//回收
         }
     },
 
