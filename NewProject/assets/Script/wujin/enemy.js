@@ -24,15 +24,11 @@ cc.Class({
     init: function(game) {
         this.game = game;
         this.state = State.WALK;
-        this.find_road();
+        this.findRoad();
     },
 
-    find_road: function() {
-        //查找挂载了wujinBG的节点
-        var bg = cc.find("Canvas/wujinBG")
-        //查找组件
-        var map_inst = bg.getComponent("wujinBG");
-        this.roadset = map_inst.get_road_set();
+    findRoad: function() {
+        this.roadset = this.game.road_path;
         // console.log(this.roadset);
         // console.log(this.roadset[0].x);
         //只有一个点直接return
@@ -45,10 +41,10 @@ cc.Class({
         //下个点的索引
         this.next_step = 1;
         this.state = State.NONE;
-        this.walk_next();
+        this.walkNext();
     },
 
-    walk_next: function() {
+    walkNext: function() {
         if(this.next_step >= this.roadset.length){
             this.state = State.DEAD;
             return;
@@ -76,7 +72,7 @@ cc.Class({
         this.now_time = 0;
     },
 
-    walk_update: function(dt){
+    walkUpdate: function(dt){
         if(this.now_time >= this.total_time){
             return;
         }
@@ -92,8 +88,8 @@ cc.Class({
 
         if(this.now_time >= this.total_time){
             this.next_step ++;
-            this.walk_next();
-            this.hurt();//测试
+            this.walkNext();
+            // this.hurt();//测试
         }
     },
 
@@ -104,14 +100,25 @@ cc.Class({
             this.bloodBar.progress = 1;
             this.blood = 10;
             this.game.gainCoin();
-            this.game.enemyPrefabManager.destroyEnemy(this.node);//回收
+            B.enemyManager.destroyEnemy(this.node);//回收
+        }
+    },
+
+    onCollisionEnter:function(other, self){
+        if(other.tag === 333){
+            // console.log("子弹击中");
+            this.hurt();//子弹资源池
+            B.bulletManager.destroyBullet(other.node);
+        } else if(other.tag === 222){
+            B.enemyManager.destroyEnemy(this.node);
+            this.game.downFatherBlood();
         }
     },
 
     //dt 距离上一次刷新过去的时间
     update: function (dt) {
         if(this.state == State.WALK){
-            this.walk_update(dt);
+            this.walkUpdate(dt);
         }
     },
 });

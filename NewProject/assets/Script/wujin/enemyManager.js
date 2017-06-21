@@ -8,6 +8,7 @@ cc.Class({
 
     init: function(game) {
         this.game = game;
+        B.enemyManager = this;
         this.enemyPool = new cc.NodePool();
         let initCount = 5;
         for (let i = 0; i < initCount; ++i) {
