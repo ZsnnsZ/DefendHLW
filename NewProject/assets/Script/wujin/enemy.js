@@ -1,9 +1,7 @@
 var State = cc.Enum({
     NONE:0,
     WALK:1,
-    SLOW:2,
-    FREEZE:3,
-    DEAD:4,
+    DEAD:2,
 });
 
 cc.Class({
@@ -89,13 +87,12 @@ cc.Class({
         if(this.now_time >= this.total_time){
             this.next_step ++;
             this.walkNext();
-            // this.hurt();//测试
         }
     },
 
-    hurt: function () {
-        this.blood -= 2;
-        this.bloodBar.progress -= 0.2;
+    hurt: function (power) {
+        this.blood -= power;
+        this.bloodBar.progress -= 0.1*power;
         if (this.blood == 0) {
             this.bloodBar.progress = 1;
             this.blood = 10;
@@ -105,11 +102,39 @@ cc.Class({
     },
 
     onCollisionEnter:function(other, self){
-        if(other.tag === 333){
-            // console.log("子弹击中");
-            this.hurt();//子弹资源池
-            B.bulletManager.destroyBullet(other.node);
-        } else if(other.tag === 222){
+        if(other.tag === 333){//碰到子弹
+            // 根据子弹的属性
+            // console.log("enemy109" + other.getComponent("bullet").state);
+            switch(other.getComponent("bullet").state){
+                case 0:
+                    this.hurt(other.getComponent("bullet").power);
+                    B.bulletManager.destroyBullet(other.node);
+                    break;
+                case 1:
+                    this.hurt(other.getComponent("bullet").power);
+                    B.bulletManager.destroyBullet(other.node);
+                    break;
+                case 3:
+                    this.hurt(other.getComponent("bullet").power);
+                    break;
+                case 4:
+                    this.schedule(function(){
+                        this.blood --;
+                        this.bloodBar.progress -= 0.1;
+                        if (this.blood == 0) {
+                            this.bloodBar.progress = 1;
+                            this.blood = 10;
+                            this.game.gainCoin();
+                            B.enemyManager.destroyEnemy(this.node);//回收
+                        }
+                    }, 1, 4, 0);
+                    break;
+                case 5:
+                    this.speed = this.speed / 2;
+                    this.hurt(other.getComponent("bullet").power);
+                    break;
+            }
+        } else if(other.tag === 222){//碰到爷爷
             B.enemyManager.destroyEnemy(this.node);
             this.game.downFatherBlood();
         }

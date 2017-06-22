@@ -43,8 +43,9 @@ cc.Class({
         this.time = 30;
         this.timeLab.string = this.time + " s";
         this.boshu = 1;
-        this.totalBo = 5;
-        this.boshuLab.string = this.boshu + " of " + this.totalBo;
+        this.totalBo = 8;
+        // this.boshuLab.string = this.boshu + " of " + this.totalBo;
+        this.boshuLab.string = this.boshu;
         //开启碰撞
         cc.director.getCollisionManager().enabled = true;
         this.enemyManager.init(this);
@@ -126,7 +127,8 @@ cc.Class({
                 this.ygzzjj.active = false;
             }, 1);
         }
-        this.boshuLab.string = this.boshu + " of " + this.totalBo;
+        // this.boshuLab.string = this.boshu + " of " + this.totalBo;
+        this.boshuLab.string = this.boshu;
         this.schedule(function(){
             this.enemyManager.createEnemy();
         }, 1, 4, 0);

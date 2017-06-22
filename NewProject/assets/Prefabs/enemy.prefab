@@ -309,7 +309,7 @@
       "__id__": 1
     },
     "_enabled": true,
-    "speed": 200,
+    "speed": 100,
     "blood": 10,
     "state": 0,
     "bloodBar": {
