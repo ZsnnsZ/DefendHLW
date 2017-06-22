@@ -49,7 +49,7 @@ cc.Class({
                     this.attackDst = 400;
                     break;
                 case 7://攻击速度加倍
-                    this.attackSpeed = 300;
+                    this.attackSpeed = 1000;
             }
             this.getBullet();
         }, 100/this.attackSpeed);

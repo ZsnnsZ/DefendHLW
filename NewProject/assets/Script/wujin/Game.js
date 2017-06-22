@@ -7,13 +7,13 @@ cc.Class({
         enemyManager: EnemyManager,
         bulletManager: BulletManager,
         gameOverMenu: cc.Node,
+        scoreLab: cc.Label,
         coinsLab: cc.Label,
         timeLab: cc.Label,
         bloodLab: cc.Label,
         boshuLab: cc.Label,
         reStartBtn: cc.Button,
         backBtn: cc.Button,
-        zhyb: cc.Node,
         ygzzjj: cc.Node,
         ydbygzzjj: cc.Node,
         grandFather: cc.Node,
@@ -26,7 +26,7 @@ cc.Class({
             event: cc.EventListener.KEYBOARD,
             onKeyPressed: function(keyCode, event) {
                 if(keyCode == cc.KEY.back){
-                    cc.director.loadScene('Menu');
+                    cc.director.loadScene('main');
                 }
             }
         }, this.node);
@@ -35,29 +35,42 @@ cc.Class({
         this.startGame();
     },
 
+    //开始游戏
     startGame: function() {
-        this.coin = 200;
+        //初始化
+        this.score = 0;
+        this.scoreLab.string = this.score;
+        this.coin = 500;
         this.coinsLab.string = this.coin;
         this.fatherBlood = 10;
         this.bloodLab.string = this.fatherBlood;
         this.time = 30;
         this.timeLab.string = this.time + " s";
         this.boshu = 1;
-        this.totalBo = 8;
-        // this.boshuLab.string = this.boshu + " of " + this.totalBo;
+        this.perDaBo = 5;
         this.boshuLab.string = this.boshu;
+
+
+        this.lockScore = 500;
+        //解锁的buff个数
+        this.buffNum = 1;
+        //每波敌人个数
+        this.perAttackNum = 4;
+        this.enemyBlood = 10;
+        this.enemySpeed = 100;
         //开启碰撞
         cc.director.getCollisionManager().enabled = true;
         this.enemyManager.init(this);
         this.bulletManager.init(this);
         this.cannons = this.enemyManager.enemyLayer.getChildren();
+
         //检测是否产生下一波:1.地图上无怪物 2.到达消灭当前怪物的时间限制
         this.schedule(function(){
-            if (this.enemyManager.enemyPool.size() == 5){
+            if (this.enemyManager.enemyPool.size() == 10){
                 this.time = 30;
                 this.nextAttack();
             }
-        }, 10);
+        }, 5);
         this.schedule(function(){
             if (this.time == 0){
                 this.time = 30;
@@ -68,26 +81,40 @@ cc.Class({
         }, 1);
     },
 
+    //停止游戏
     stopGame: function() {
         this.gameOverMenu.active = true;
         cc.director.getCollisionManager().enabled = false;
     },
 
+    //回到主界面
     backMain: function() {
         cc.director.loadScene("main");
     },
 
+    //重新开始
     reStart: function() {
         cc.director.loadScene("wujin");
     },
 
+    //获得金币
     gainCoin: function() {
         this.coin += 100;
         this.coinsLab.string = this.coin;
     },
 
+    //获得分数
+    gainScore: function() {
+        this.score += 100;
+        this.scoreLab.string = this.score;
+        if(this.score / this.lockScore == 1){
+            this.unlockBuff();
+            this.lockScore = this.lockScore * 2;
+        }
+    },
+
     //检测金币够不够花
-    couldBuy: function(coins) {
+    canBuy: function(coins) {
         if(this.coin - coins >= 0){
             return 1;
         }else{
@@ -95,11 +122,21 @@ cc.Class({
         }
     },
 
+    //解锁buff，增加每波敌人数
+    unlockBuff: function() {
+        this.buffNum ++;
+        this.perAttackNum ++;
+    },
+
+    //花费金币(建炮塔)
     downCoin: function(coins) {
-        //花费金币(建炮塔、买buff)
         this.coin -= coins;
         this.coinsLab.string = this.coin;
     },
+
+    //花费金币(买buff)
+
+    //减少爷爷的血
     downFatherBlood: function(){
         this.fatherBlood --;
         if (this.fatherBlood == 0) {
@@ -109,17 +146,19 @@ cc.Class({
         this.bloodLab.string = this.fatherBlood;
     },
 
+    //产生下一波怪物
     nextAttack: function() {
         this.boshu ++;
-        if (this.boshu == (this.totalBo/2)) {
+        if(this.enemyblood <= 20) {
+            this.enemyblood ++;
+        }
+        if(this.enemySpeed <= 200) {
+            this.enemySpeed += 10;
+        }
+        if (this.boshu % this.perDaBo == 0) {
             this.ydbygzzjj.active = true;
             this.scheduleOnce(function(){
                 this.ydbygzzjj.active = false;
-            }, 1);
-        }else if (this.boshu == this.totalBo) {
-            this.zhyb.active = true;
-            this.scheduleOnce(function(){
-                this.zhyb.active = false;
             }, 1);
         }else{
             this.ygzzjj.active = true;
@@ -127,14 +166,10 @@ cc.Class({
                 this.ygzzjj.active = false;
             }, 1);
         }
-        // this.boshuLab.string = this.boshu + " of " + this.totalBo;
         this.boshuLab.string = this.boshu;
         this.schedule(function(){
             this.enemyManager.createEnemy();
-        }, 1, 4, 0);
+        }, 1, this.perAttackNum, 0);
     },
 
-    // called every frame, uncomment this function to activate update callback
-    // update: function (dt) {
-    // },
 });

@@ -28,11 +28,17 @@ cc.Class({
         var self = this;
         //给能力子节点添加事件监听
         self.node.on(cc.Node.EventType.TOUCH_START, function (event) {
-            //获得所有的武器子节点
+            //选择能力后五秒恢复按钮的状态
             self.btnNode.getComponent("weapon").btnState = 4;
             self.btnNode.getComponent("weapon").scheduleOnce(function(){
+                console.log("ability: "+self.btnNode.getComponent("weapon").btnState);
                 self.btnNode.getComponent("weapon").btnState = 2;
+                console.log("ability: "+self.btnNode.getComponent("weapon").btnState);
             }, 5);
+            //消耗金币
+            B.game.coin -= 50;
+            B.game.coinsLab.string = B.game.coin;
+            //获得所有的炮塔子节点
             var tower_children = self.towerLayer.getChildren();
             for (var i = 0; i < tower_children.length; ++i) {
                 var child_pos = tower_children[i].getPosition();

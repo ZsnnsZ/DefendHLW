@@ -37,7 +37,7 @@ cc.Class({
                 self.hideAllAbility(self);
             } else if(self.btnState == 1){
                 // 放置一个炮塔              
-                if (B.game.couldBuy(self.coins)){
+                if (B.game.canBuy(self.coins)){
                     B.game.downCoin(self.coins);
                     let tower = null;
                     self.btnPlus.active = false;
@@ -51,13 +51,13 @@ cc.Class({
                 self.hideAllWeaponBtn(self);
             } else if(self.btnState == 2){
                 // buff
-                //按钮为武器塔状态时的点击状态2
-
+                //显示buff列表，选择buff后进入ability中的事件监听
                 self.showAllAbility(self);
                 self.hideAllWeaponBtn(self);
-                //将按钮状态置为能力状态3
+                //将按钮状态置为buff等待选择状态
                 self.btnState = 3;
             }else if (self.btnState == 3){
+                //没有选择buff则返回状态2
                 self.hideAllAbility(self);
                 self.hideAllWeaponBtn(self);
                 self.btnState = 2;
@@ -90,7 +90,7 @@ cc.Class({
         var a_children = self.abilityLayer.getChildren();
 
         //显示所有的能力子节点
-        for (var i = 0; i < a_children.length; i++) {
+        for (var i = 0; i < B.game.buffNum; i++) {
             a_children[i].active = true;
 
             //对边界上的能力子节点的位置进行处理

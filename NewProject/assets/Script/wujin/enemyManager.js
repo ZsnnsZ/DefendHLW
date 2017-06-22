@@ -10,12 +10,13 @@ cc.Class({
         this.game = game;
         B.enemyManager = this;
         this.enemyPool = new cc.NodePool();
-        let initCount = 5;
+        let initCount = 10;
         for (let i = 0; i < initCount; ++i) {
             let enemy = cc.instantiate(this.enemyPrefab); // 创建节点
             this.enemyPool.put(enemy); // 通过 putInPool 接口放入对象池
         }
 
+        // 根据分数增加每波产生的敌人数
         this.schedule(function(){
             this.createEnemy();
         }, 1, 4, 0);

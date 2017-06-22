@@ -72,7 +72,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "2888f986-de32-45fa-a83c-2ce45d6359ca"
+      "__uuid__": "66f8837f-9ecc-45fe-9c68-073b85aa2b7e"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -98,9 +98,11 @@
     },
     "_enabled": true,
     "attackSpeed": 100,
+    "attackDst": 200,
     "bulletPrefab": {
       "__uuid__": "87b1ff15-f1b2-4d1f-9129-0e894021bfcb"
-    }
+    },
+    "state": 0
   },
   {
     "__type__": "cc.PrefabInfo",

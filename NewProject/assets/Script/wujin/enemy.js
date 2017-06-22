@@ -45,6 +45,7 @@ cc.Class({
     walkNext: function() {
         if(this.next_step >= this.roadset.length){
             this.state = State.DEAD;
+            this.enemyToPool();
             return;
         }
 
@@ -90,14 +91,23 @@ cc.Class({
         }
     },
 
+
+    enemyToPool: function() {
+        this.bloodBar.progress = 1;
+        this.blood = B.game.enemyBlood;
+        this.speed = B.game.enemySpeed;
+        B.enemyManager.destroyEnemy(this.node);
+    },
+
+    //怪物掉血
     hurt: function (power) {
         this.blood -= power;
-        this.bloodBar.progress -= 0.1*power;
-        if (this.blood == 0) {
-            this.bloodBar.progress = 1;
-            this.blood = 10;
+        this.bloodBar.progress -= (1/B.game.enemyBlood)*power;
+        console.log("bloo " + B.game.enemyBlood);
+        if (this.blood <= 0) {
             this.game.gainCoin();
-            B.enemyManager.destroyEnemy(this.node);//回收
+            this.game.gainScore();
+            this.enemyToPool();
         }
     },
 
@@ -106,36 +116,36 @@ cc.Class({
             // 根据子弹的属性
             // console.log("enemy109" + other.getComponent("bullet").state);
             switch(other.getComponent("bullet").state){
-                case 0:
+                case 0://正常
                     this.hurt(other.getComponent("bullet").power);
                     B.bulletManager.destroyBullet(other.node);
                     break;
-                case 1:
+                case 1://攻击增加
                     this.hurt(other.getComponent("bullet").power);
                     B.bulletManager.destroyBullet(other.node);
                     break;
-                case 3:
+                case 3://穿透
                     this.hurt(other.getComponent("bullet").power);
                     break;
-                case 4:
+                case 4://掉血
                     this.schedule(function(){
-                        this.blood --;
-                        this.bloodBar.progress -= 0.1;
-                        if (this.blood == 0) {
-                            this.bloodBar.progress = 1;
-                            this.blood = 10;
+                        if(this.blood > 0){
+                            this.blood --;
+                            this.bloodBar.progress -= (1/this.blood)*power;
+                        }else{
                             this.game.gainCoin();
-                            B.enemyManager.destroyEnemy(this.node);//回收
+                            this.game.gainScore();
+                            this.enemyToPool();
                         }
                     }, 1, 4, 0);
                     break;
-                case 5:
-                    this.speed = this.speed / 2;
+                case 5://减速
+                    this.speed = this.speed * 0.9;
                     this.hurt(other.getComponent("bullet").power);
                     break;
             }
         } else if(other.tag === 222){//碰到爷爷
-            B.enemyManager.destroyEnemy(this.node);
+            this.enemyToPool();
             this.game.downFatherBlood();
         }
     },
