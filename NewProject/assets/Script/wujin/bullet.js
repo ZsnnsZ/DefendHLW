@@ -22,6 +22,36 @@ cc.Class({
             default: State.NONE,
             visible: true,
         },
+
+
+        audioSource0: {
+            url: cc.AudioClip,
+            default: null,
+        },
+        audioSource1: {
+            url: cc.AudioClip,
+            default: null,
+        },
+        audioSource2: {
+            url: cc.AudioClip,
+            default: null,
+        },
+        audioSource3: {
+            url: cc.AudioClip,
+            default: null,
+        },
+        audioSource4: {
+            url: cc.AudioClip,
+            default: null,
+        },
+        audioSource5: {
+            url: cc.AudioClip,
+            default: null,
+        },
+        audioSource6: {
+            url: cc.AudioClip,
+            default: null,
+        },
     },
 
     findRoad: function(start_pos, end_pos, state) {
@@ -29,22 +59,33 @@ cc.Class({
             case 0:
                 this.power = 1;
                 this.state = State.NONE;
+                cc.audioEngine.play(this.audioSource0, false, 1);
                 break;
             case 1:
                 this.power = 2;
                 this.state = State.RED;
+                cc.audioEngine.play(this.audioSource1, false, 1);
                 break;
             case 3:
                 this.canTututu = true;
                 this.state = State.YELLOW;
+                cc.audioEngine.play(this.audioSource2, false, 1);
                 break;
             case 4:
                 this.canFire = true;
                 this.state = State.GREEN;
+                cc.audioEngine.play(this.audioSource3, false, 1);
                 break;
             case 5:
                 this.canFreeze = true;
                 this.state = State.CYAN;
+                cc.audioEngine.play(this.audioSource4, false, 1);
+                break;
+            case 7:
+                cc.audioEngine.play(this.audioSource5, false, 1);
+                break;
+            case 2:
+                cc.audioEngine.play(this.audioSource6, false, 1);
                 break;
         }
 

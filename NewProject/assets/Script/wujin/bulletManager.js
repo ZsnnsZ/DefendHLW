@@ -24,7 +24,7 @@ var bulletManager = cc.Class({
         } else { // 如果没有空闲对象，也就是对象池中备用对象不够时，我们就用 cc.instantiate 重新创建
             bullet = cc.instantiate(this.bulletPrefab);
         }
-        this.bulletLayer.addChild(bullet); // 将生成的敌人加入节点树
+        this.bulletLayer.addChild(bullet); // 将生成的子弹加入节点树
         return bullet;
     },
 

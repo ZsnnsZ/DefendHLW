@@ -129,7 +129,28 @@
     "canFire": false,
     "canFreeze": false,
     "canBiubiu": false,
-    "state": 0
+    "state": 0,
+    "audioSource0": {
+      "__uuid__": "68df6edb-99ea-4824-ae1d-8adc15de415f"
+    },
+    "audioSource1": {
+      "__uuid__": "30ace95a-0238-40a3-ac04-c5b50003b1e5"
+    },
+    "audioSource2": {
+      "__uuid__": "f278a7db-0412-406c-a0bb-58d59b4fba68"
+    },
+    "audioSource3": {
+      "__uuid__": "257b37f0-99a2-4668-ad11-ae394ec8a164"
+    },
+    "audioSource4": {
+      "__uuid__": "5dd2daa9-b8b7-445d-85e0-6dd310c9c9f9"
+    },
+    "audioSource5": {
+      "__uuid__": "a6777262-9e7b-40aa-adc6-5e8125b23738"
+    },
+    "audioSource6": {
+      "__uuid__": "38e83949-3237-4dc1-804d-9117ae9d1332"
+    }
   },
   {
     "__type__": "cc.PolygonCollider",

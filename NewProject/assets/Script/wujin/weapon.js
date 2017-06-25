@@ -17,6 +17,11 @@ cc.Class({
         btnPlus: cc.Node,
         towerLayer: cc.Node,
         coins: 100,
+        audioSource:{
+            url:cc.AudioClip,
+            default:null,
+        }
+
     },
 
     // use this for initialization
@@ -24,20 +29,20 @@ cc.Class({
         this.weaponLayer = cc.find("Canvas/weaponLayer");
         this.abilityLayer = cc.find("Canvas/abilityLayer");
 
-        //设置能力字节点的颜色
+        //设置能力子节点的颜色
         this.setColor();
 
         var self = this;
         //监听事件
-        self.node.on(cc.Node.EventType.TOUCH_START, function(event){//MOUSE_DOWN
-            if(self.btnState == 0){
+        self.node.on(cc.Node.EventType.TOUCH_START, function (event) {//MOUSE_DOWN
+            if (self.btnState == 0) {
                 // 显示所有可以放置炮塔的btn
                 self.showAllBtn(self);
                 //隐藏能力子节点
                 self.hideAllAbility(self);
-            } else if(self.btnState == 1){
+            } else if (self.btnState == 1) {
                 // 放置一个炮塔              
-                if (B.game.canBuy(self.coins)){
+                if (B.game.canBuy(self.coins)) {
                     B.game.downCoin(self.coins);
                     let tower = null;
                     self.btnPlus.active = false;
@@ -45,23 +50,25 @@ cc.Class({
                     self.towerLayer.addChild(tower);
                     tower.setPosition(self.node.getPosition());
                     self.btnState = 2;
+                    cc.audioEngine.play(self.audioSource, false, 1);
                     tower.getComponent('tower').init();
                 }
                 //隐藏其它按钮
                 self.hideAllWeaponBtn(self);
-            } else if(self.btnState == 2){
+            } else if (self.btnState == 2) {
                 // buff
                 //显示buff列表，选择buff后进入ability中的事件监听
+                self.btnState = 3;
+                self.hideAllAbility(self);
                 self.showAllAbility(self);
                 self.hideAllWeaponBtn(self);
                 //将按钮状态置为buff等待选择状态
-                self.btnState = 3;
-            }else if (self.btnState == 3){
+            } else if (self.btnState == 3) {
                 //没有选择buff则返回状态2
                 self.hideAllAbility(self);
                 self.hideAllWeaponBtn(self);
                 self.btnState = 2;
-            }else if(self.btnState == 4) {
+            } else if (self.btnState == 4) {
                 self.hideAllAbility(self);
                 self.hideAllWeaponBtn(self);
             }
@@ -70,9 +77,12 @@ cc.Class({
 
     },
 
-    hideAllAbility:function (self) {
+    hideAllAbility: function (self) {
         //获得所有的能力子节点
         var a_children = self.abilityLayer.getChildren();
+        if(a_children[0].getComponent("ability").btnNode.getComponent("weapon").btnState == 3){
+            a_children[0].getComponent("ability").btnNode.getComponent("weapon").btnState = 2;
+        }
         //隐藏所有的能力子节点
         for (var i = 0; i < a_children.length; i++) {
             a_children[i].active = false;
@@ -85,34 +95,39 @@ cc.Class({
 
         //能力位置偏移量
         var ability_poss = [cc.p(-60, 60), cc.p(0, 60), cc.p(60, 60), cc.p(-60, -60), cc.p(0, -60), cc.p(60, -60)];
-        var states = [State.RED, State.ORANGE, State.YELLOW, State.GREEN, State.CYAN, State.PURPLE]           
+        var states = [State.RED, State.ORANGE, State.YELLOW, State.GREEN, State.CYAN, State.PURPLE]
         //获得所有的能力子节点
         var a_children = self.abilityLayer.getChildren();
 
         //显示所有的能力子节点
         for (var i = 0; i < B.game.buffNum; i++) {
+
             a_children[i].active = true;
 
             //对边界上的能力子节点的位置进行处理
-            if(btn_pos.x < -400){
-                a_children[i].setPosition(cc.p(btn_pos.x + ability_poss[i].x+60, btn_pos.y + ability_poss[i].y));
-            } else if (btn_pos.x > 400){
-                a_children[i].setPosition(cc.p(btn_pos.x + ability_poss[i].x-60, btn_pos.y + ability_poss[i].y));
+            if (btn_pos.x < -400) {
+                a_children[i].setPosition(cc.p(btn_pos.x + ability_poss[i].x + 60, btn_pos.y + ability_poss[i].y));
+            } else if (btn_pos.x > 400) {
+                a_children[i].setPosition(cc.p(btn_pos.x + ability_poss[i].x - 60, btn_pos.y + ability_poss[i].y));
             } else {
                 a_children[i].setPosition(cc.p(btn_pos.x + ability_poss[i].x, btn_pos.y + ability_poss[i].y));
             }
             a_children[i].getComponent("ability").state = states[i];
             a_children[i].getComponent('ability').parentPos = self.node.getPosition();
             a_children[i].getComponent('ability').btnNode = self.node;
-
+            if (a_children[i].getComponent('ability').canBuyAbility() == 0) {
+                self.btnState = 2;
+                self.hideAllAbility(self);
+            }
         }
+
     },
 
     //设置子节点颜色
     setColor: function () {
         //颜色数组
-        var colors = [cc.color(255, 0, 0), cc.color(238, 80, 5), cc.color(248, 229, 5),
-        cc.color(0, 255, 0), cc.color(5, 248, 161), cc.color(248, 5, 219)];
+        var colors = [cc.color(255, 0, 0), cc.color(255, 156, 0), cc.color(255, 255, 0),
+        cc.color(0, 255, 0), cc.color(0, 255, 255), cc.color(255, 0, 255)];
 
         var a_children = this.abilityLayer.getChildren();
         for (var i = 0; i < a_children.length; i++) {

@@ -16,6 +16,11 @@ cc.Class({
             visible:false,
         },
         bloodBar: cc.ProgressBar,
+        audioSource:{
+            url:cc.AudioClip,
+            default:null,
+        }
+
     },
 
     // use this for initialization
@@ -96,6 +101,7 @@ cc.Class({
         this.bloodBar.progress = 1;
         this.blood = B.game.enemyBlood;
         this.speed = B.game.enemySpeed;
+        this.node.color = cc.color(255,255,255);
         B.enemyManager.destroyEnemy(this.node);
     },
 
@@ -103,8 +109,9 @@ cc.Class({
     hurt: function (power) {
         this.blood -= power;
         this.bloodBar.progress -= (1/B.game.enemyBlood)*power;
-        console.log("bloo " + B.game.enemyBlood);
+        // console.log("total blood " + B.game.enemyBlood);
         if (this.blood <= 0) {
+            cc.audioEngine.play(this.audioSource, false, 1);
             this.game.gainCoin();
             this.game.gainScore();
             this.enemyToPool();
@@ -128,19 +135,32 @@ cc.Class({
                     this.hurt(other.getComponent("bullet").power);
                     break;
                 case 4://掉血
+                    B.bulletManager.destroyBullet(other.node);
+                    this.node.color = cc.color(0, 255, 0);
+                    this.scheduleOnce(function() {
+                        this.node.color = cc.color(255,255,255);                        
+                    }, 2);
+
                     this.schedule(function(){
-                        if(this.blood > 0){
+                        if(this.blood >= 1.2){
                             this.blood --;
-                            this.bloodBar.progress -= (1/this.blood)*power;
+                            this.bloodBar.progress -= (1/B.game.enemyBlood) * other.getComponent("bullet").power;
                         }else{
                             this.game.gainCoin();
                             this.game.gainScore();
                             this.enemyToPool();
                         }
-                    }, 1, 4, 0);
+                    }, 1, 1, 0);
+                    
                     break;
                 case 5://减速
-                    this.speed = this.speed * 0.9;
+                    B.bulletManager.destroyBullet(other.node);
+                    this.node.color = cc.color(0, 255, 255);
+                    this.scheduleOnce(function() {
+                        this.node.color = cc.color(255, 255, 255);
+                        this.speed = B.game.enemySpeed;                     
+                    }, 5);
+                    this.speed = this.speed * 0.8;
                     this.hurt(other.getComponent("bullet").power);
                     break;
             }
