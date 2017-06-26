@@ -163,12 +163,14 @@ cc.Class({
 
     //回到主界面
     backMain: function() {
+        cc.game.resume();
         cc.audioEngine.stop(this.audioID);
         cc.director.loadScene("main");
     },
 
     //重新开始
     reStart: function() {
+        cc.game.resume();
         cc.audioEngine.stop(this.audioID);
         cc.director.loadScene("wujin");
     },
