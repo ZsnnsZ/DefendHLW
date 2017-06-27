@@ -22,32 +22,90 @@ cc.Class({
         enemyLayer: cc.Node,
         daojishiLab: cc.Label,
         unlockBuffTip: cc.Node,
-        audioSource:{
+        audioEngine:{
             url:cc.AudioClip,
             default:null,
         },
-        audioSource1:{
+        audioEngine1:{
             url:cc.AudioClip,
             default:null,
         },
-        audioSource2:{
+        audioEngine2:{
             url:cc.AudioClip,
             default:null,
         },
-        audioSource3:{
+        audioEngine3:{
             url:cc.AudioClip,
             default:null,
         },
-        audioSource4:{
+        audioEngine4:{
             url:cc.AudioClip,
             default:null,
         },
+        bulletSource0:{
+            type:cc.AudioSource,
+            default:null
+        },
+        bulletSource0:{
+            type:cc.AudioSource,
+            default:null
+        },
+        bulletSource1:{
+            type:cc.AudioSource,
+            default:null
+        },
+        bulletSource2:{
+            type:cc.AudioSource,
+            default:null
+        },
+        bulletSource3:{
+            type:cc.AudioSource,
+            default:null
+        },
+        bulletSource4:{
+            type:cc.AudioSource,
+            default:null
+        },
+        bulletSource5:{
+            type:cc.AudioSource,
+            default:null
+        },
+        bulletSource6:{
+            type:cc.AudioSource,
+            default:null
+        },
+        enemySource:{
+            type:cc.AudioSource,
+            default:null
+        },
+        unlockSource:{
+            type:cc.AudioSource,
+            default:null
+        },
+        deadSource:{
+            type:cc.AudioSource,
+            default:null
+        },
+        hurtSource:{
+            type:cc.AudioSource,
+            default:null
+        },
+        putSource:{
+            type:cc.AudioSource,
+            default:null
+        },
+        clickSource:{
+            type:cc.AudioSource,
+            default:null
+        }
+    
 
     },
 
     // use this for initialization
     onLoad: function () {
-        this.audioID = cc.audioEngine.play(this.audioSource4, true, 1);
+        this.audioID = cc.audioEngine.play(this.audioEngine4, true, 1);
+        this.shezhiBtn = 0;
         cc.eventManager.addListener({
             event: cc.EventListener.KEYBOARD,
             onKeyPressed: function(keyCode, event) {
@@ -83,8 +141,9 @@ cc.Class({
         //初始化
         this.score = 0;
         this.scoreLab.string = this.score;
-        this.coin = 500;
+        this.coin = 600;
         this.coinsLab.string = this.coin;
+        this.towerCoin = 150;
         this.fatherBlood = 10;
         this.bloodLab.string = this.fatherBlood;
         this.time = 30;
@@ -93,6 +152,8 @@ cc.Class({
         this.perDaBo = 5;
         this.boshuLab.string = this.boshu;
 
+        //每杀死一个敌人获得金币数
+        this.getCoin = 80;
         //开启音效
         this.musicFlag = 1;
         //解锁第一个buff的分数
@@ -102,7 +163,7 @@ cc.Class({
         //每波敌人个数
         this.perAttackNum = 4;
         //每个敌人的血量
-        this.enemyBlood = 10;
+        this.enemyBlood = 6;
         //每个敌人的初始速度
         this.enemySpeed = 100;
         //Buff持续时间
@@ -117,7 +178,7 @@ cc.Class({
 
         //检测是否产生下一波:1.地图上无怪物 2.到达消灭当前怪物的时间限制
         this.schedule(function(){
-            if (this.enemyManager.enemyPool.size() == 10 && this.enemyManager.enemyPool2.size() == 10){
+            if (this.enemyManager.enemyPool.size() == 15 && this.enemyManager.enemyPool2.size() == 15){
                 this.time = 30;
                 this.nextAttack();
             }
@@ -134,19 +195,28 @@ cc.Class({
 
     //停止游戏
     stopGame: function() {
-        cc.audioEngine.play(this.audioSource3, false, 1);
+        this.clickSource.play();
+        cc.audioEngine.play(this.audioEngine3, false, 1);
         this.gameOverMenu.active = true;
         cc.director.getCollisionManager().enabled = false;
     },
 
     //退出游戏
     onBtnExit: function() {
+        this.clickSource.play();
         cc.game.end();
     },
 
     //设置
     onBtnSet: function() {
-        this.setMenu.active = true;
+        this.clickSource.play();
+        if(this.shezhiBtn == 0){
+            this.setMenu.active = true;
+            this.shezhiBtn = 1
+        } else {
+            this.setMenu.active = false;
+            this.shezhiBtn = 0
+        }
     },
 
     //背景音乐
@@ -163,6 +233,7 @@ cc.Class({
 
     //回到主界面
     backMain: function() {
+        this.clickSource.play();
         cc.game.resume();
         cc.audioEngine.stop(this.audioID);
         cc.director.loadScene("main");
@@ -170,6 +241,7 @@ cc.Class({
 
     //重新开始
     reStart: function() {
+        this.clickSource.play();
         cc.game.resume();
         cc.audioEngine.stop(this.audioID);
         cc.director.loadScene("wujin");
@@ -177,6 +249,7 @@ cc.Class({
 
     //暂停游戏
     onBtnPauseGame: function() {
+        this.clickSource.play();
         this.zantingTip.active = true;
         cc.game.pause();
         this.setMenu.active = false;
@@ -184,6 +257,7 @@ cc.Class({
 
     //继续游戏
     onBtnGoon:function(){
+        this.clickSource.play();
         this.zantingTip.active = false;
         cc.game.resume();
         this.setMenu.active = false;
@@ -191,15 +265,15 @@ cc.Class({
 
     //获得金币
     gainCoin: function() {
-        this.coin += 100;
+        this.coin += this.getCoin;
         this.coinsLab.string = this.coin;
     },
 
     //获得分数
     gainScore: function() {
-        this.score += 100;
+        this.score += this.getCoin;
         this.scoreLab.string = this.score;
-        if(this.score / this.lockScore == 1){
+        if(this.score > this.lockScore ){
             this.unlockBuff();
             this.lockScore = this.lockScore * 2;
         }
@@ -216,12 +290,13 @@ cc.Class({
 
     //解锁buff，增加每波敌人数
     unlockBuff: function() {
+        this.unlockSource.play();
         if(this.buffNum < 6){
             this.unlockBuffTip.active = true;
             this.scheduleOnce(function(){
                 this.unlockBuffTip.active = false;
             }, 1); 
-            cc.audioEngine.play(this.audioSource, false, 1);
+            //cc.audioEngine.play(this.audioEngine, false, 1);
             this.buffNum ++;
         }
         if(this.perAttackNum < 9){
@@ -238,10 +313,12 @@ cc.Class({
     //减少爷爷的血
     downFatherBlood: function(){
         this.fatherBlood --;
-        cc.audioEngine.play(this.audioSource2, false, 1);
+        //cc.audioEngine.play(this.audioEngine2, false, 1);
+        this.hurtSource.play();
         if (this.fatherBlood == 0) {
             this.grandFather.color = cc.Color.GRAY;
-            cc.audioEngine.play(this.audioSource1, false, 1);
+            //cc.audioEngine.play(this.audioEngine1, false, 1);
+            this.deadSource.play();
             this.stopGame();
         }
         this.bloodLab.string = this.fatherBlood;
@@ -254,8 +331,11 @@ cc.Class({
         //每波切换怪物种类
         this.enemyType = 3 - this.enemyType;
         var tempAttackNum = this.perAttackNum;
-        if(this.enemyBlood <= 20) {
-            this.enemyBlood ++;
+        if(this.getCoin <= 130){
+            this.getCoin += 5; 
+        }
+        if(this.enemyBlood <= 27) {
+            this.enemyBlood += 3;
         }
         if(this.enemySpeed <= 200) {
             this.enemySpeed += 10;

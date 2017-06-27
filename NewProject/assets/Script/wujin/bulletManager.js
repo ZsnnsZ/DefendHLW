@@ -10,7 +10,7 @@ var bulletManager = cc.Class({
         this.game = game;
         B.bulletManager = this;
         this.bulletPool = new cc.NodePool();
-        let initCount = 10;
+        let initCount = 50;
         for (let i = 0; i < initCount; ++i) {
             let bullet = cc.instantiate(this.bulletPrefab); // 创建节点
             this.bulletPool.put(bullet); // 通过 putInPool 接口放入对象池

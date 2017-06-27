@@ -16,11 +16,7 @@ cc.Class({
         btnState: 0,
         btnPlus: cc.Node,
         towerLayer: cc.Node,
-        coins: 100,
-        audioSource:{
-            url:cc.AudioClip,
-            default:null,
-        }
+     
 
     },
 
@@ -42,15 +38,15 @@ cc.Class({
                 self.hideAllAbility(self);
             } else if (self.btnState == 1) {
                 // 放置一个炮塔              
-                if (B.game.canBuy(self.coins)) {
-                    B.game.downCoin(self.coins);
+                if (B.game.canBuy(B.game.towerCoin)) {
+                    B.game.downCoin(B.game.towerCoin);
                     let tower = null;
                     self.btnPlus.active = false;
                     tower = cc.instantiate(self.towerPrefab);
                     self.towerLayer.addChild(tower);
                     tower.setPosition(self.node.getPosition());
                     self.btnState = 2;
-                    cc.audioEngine.play(self.audioSource, false, 1);
+                    B.game.putSource.play();
                     tower.getComponent('tower').init();
                 }
                 //隐藏其它按钮

@@ -23,9 +23,9 @@ cc.Class({
         },
         btnNode: cc.Node,
         eventState: 0,
-        audioSource:{
-            url:cc.AudioClip,
-            default:null,
+        abilitySource:{
+            type:cc.AudioSource,
+            default:null
         }
 
        
@@ -47,7 +47,8 @@ cc.Class({
             self.eventState = 1;
             //给能力子节点添加事件监听
             self.node.on(cc.Node.EventType.TOUCH_START, function (event) {
-                cc.audioEngine.play(self.audioSource, false, 1);
+                //cc.audioEngine.play(self.audioSource, false, 1);
+                self.abilitySource.play();
                 B.game.downCoin(self.coins);
                 //选择能力后五秒恢复按钮的状态
                 self.btnNode.getComponent("weapon").btnState = 4;

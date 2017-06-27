@@ -12,7 +12,7 @@ cc.Class({
         B.enemyManager = this;
         this.enemyPool = new cc.NodePool();
         this.enemyPool2 = new cc.NodePool();
-        let initCount = 10;
+        let initCount = 15;
         //蛇精
         for (let i = 0; i < initCount; ++i) {
             let enemy = cc.instantiate(this.enemyPrefab); // 创建节点

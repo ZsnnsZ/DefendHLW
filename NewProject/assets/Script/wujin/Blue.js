@@ -3,7 +3,7 @@ cc.Class({
 
     properties: {
         parentNode: cc.Node,
-        coins: 500,
+        coins: 300,
     },
 
     // use this for initialization

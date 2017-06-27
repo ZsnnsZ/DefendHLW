@@ -12,7 +12,6 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        attackSpeed: 100,
         attackDst: 200,
         bulletPrefab: cc.Prefab,
         state: {
@@ -39,13 +38,11 @@ cc.Class({
                     this.attackDst = 200;
                     break;
                 case 2://攻击距离加倍
-                    this.attackDst = 400;
+                    this.attackDst = 600;
                     break;
-                case 7://攻击速度加倍
-                    this.attackSpeed = 1000;
             }
             this.getBullet();
-        }, 100 / this.attackSpeed);
+        }, 1);
 
     },
 

@@ -96,7 +96,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "3db9956d-3b35-44f7-8305-32e7966aa3b1"
+      "__uuid__": "4847d81e-3d78-443a-b0bf-ea56a5e1c31e"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -112,7 +112,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_atlas": {
-      "__uuid__": "3b8c1e5b-83b1-40eb-9fea-2833be270a53"
+      "__uuid__": "8e3ded55-8b43-4f86-af1e-2b48cc03e94d"
     }
   },
   {
@@ -123,34 +123,14 @@
       "__id__": 1
     },
     "_enabled": true,
-    "speed": 300,
+    "speed": 500,
     "power": 1,
     "canTututu": false,
     "canFire": false,
     "canFreeze": false,
     "canBiubiu": false,
-    "state": 0,
-    "audioSource0": {
-      "__uuid__": "68df6edb-99ea-4824-ae1d-8adc15de415f"
-    },
-    "audioSource1": {
-      "__uuid__": "30ace95a-0238-40a3-ac04-c5b50003b1e5"
-    },
-    "audioSource2": {
-      "__uuid__": "f278a7db-0412-406c-a0bb-58d59b4fba68"
-    },
-    "audioSource3": {
-      "__uuid__": "257b37f0-99a2-4668-ad11-ae394ec8a164"
-    },
-    "audioSource4": {
-      "__uuid__": "5dd2daa9-b8b7-445d-85e0-6dd310c9c9f9"
-    },
-    "audioSource5": {
-      "__uuid__": "a6777262-9e7b-40aa-adc6-5e8125b23738"
-    },
-    "audioSource6": {
-      "__uuid__": "38e83949-3237-4dc1-804d-9117ae9d1332"
-    }
+    "canCut": false,
+    "state": 0
   },
   {
     "__type__": "cc.PolygonCollider",

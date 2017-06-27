@@ -9,17 +9,13 @@ cc.Class({
 
     properties: {
         speed: 100,
-        blood: 10,
+        blood: 6,
         state: {
             type:State,
             default:State.NONE,
             visible:false,
         },
         bloodBar: cc.ProgressBar,
-        audioSource:{
-            url:cc.AudioClip,
-            default:null,
-        }
 
     },
 
@@ -27,6 +23,8 @@ cc.Class({
     init: function(game) {
         this.game = game;
         this.state = State.WALK;
+        this.speed = B.game.enemySpeed;
+        this.blood = B.game.enemyBlood;
         this.findRoad();
     },
 
@@ -111,7 +109,8 @@ cc.Class({
         this.bloodBar.progress -= (1/B.game.enemyBlood)*power;
         // console.log("total blood " + B.game.enemyBlood);
         if (this.blood <= 0) {
-            cc.audioEngine.play(this.audioSource, false, 1);
+            //cc.audioEngine.play(this.audioSource, false, 1);
+            B.game.enemySource.play();
             this.game.gainCoin();
             this.game.gainScore();
             this.enemyToPool();
@@ -139,7 +138,7 @@ cc.Class({
                     this.node.color = cc.color(0, 255, 0);
                     this.scheduleOnce(function() {
                         this.node.color = cc.color(255,255,255);                        
-                    }, 2);
+                    }, 3);
 
                     this.schedule(function(){
                         if(this.blood >= 1.2){
@@ -150,7 +149,7 @@ cc.Class({
                             this.game.gainScore();
                             this.enemyToPool();
                         }
-                    }, 1, 1, 0);
+                    }, 1, 2, 0);
                     
                     break;
                 case 5://减速
@@ -159,9 +158,15 @@ cc.Class({
                     this.scheduleOnce(function() {
                         this.node.color = cc.color(255, 255, 255);
                         this.speed = B.game.enemySpeed;                     
-                    }, 5);
-                    this.speed = this.speed * 0.8;
+                    }, 10);
+                    this.speed = this.speed * 0.7;
                     this.hurt(other.getComponent("bullet").power);
+                    break;
+                case 7://斩杀
+                    B.bulletManager.destroyBullet(other.node);
+                    if(this.blood <= B.game.enemyBlood * 0.3){
+                        this.enemyToPool();
+                    }
                     break;
             }
         } else if(other.tag === 222){//碰到爷爷
