@@ -138,7 +138,7 @@ cc.Class({
                     this.node.color = cc.color(0, 255, 0);
                     this.scheduleOnce(function() {
                         this.node.color = cc.color(255,255,255);                        
-                    }, 3);
+                    }, 4);
 
                     this.schedule(function(){
                         if(this.blood >= 1.2){
@@ -149,7 +149,7 @@ cc.Class({
                             this.game.gainScore();
                             this.enemyToPool();
                         }
-                    }, 1, 2, 0);
+                    }, 1, 3, 0);
                     
                     break;
                 case 5://减速
@@ -158,8 +158,8 @@ cc.Class({
                     this.scheduleOnce(function() {
                         this.node.color = cc.color(255, 255, 255);
                         this.speed = B.game.enemySpeed;                     
-                    }, 10);
-                    this.speed = this.speed * 0.7;
+                    }, 7);
+                    this.speed = this.speed * 0.8;
                     this.hurt(other.getComponent("bullet").power);
                     break;
                 case 7://斩杀

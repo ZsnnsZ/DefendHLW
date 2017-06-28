@@ -153,7 +153,7 @@ cc.Class({
         this.boshuLab.string = this.boshu;
 
         //每杀死一个敌人获得金币数
-        this.getCoin = 80;
+        this.getCoin = 50;
         //开启音效
         this.musicFlag = 1;
         //解锁第一个buff的分数
@@ -331,14 +331,14 @@ cc.Class({
         //每波切换怪物种类
         this.enemyType = 3 - this.enemyType;
         var tempAttackNum = this.perAttackNum;
-        if(this.getCoin <= 130){
+        if(this.getCoin <= 100){
             this.getCoin += 5; 
         }
-        if(this.enemyBlood <= 27) {
+        if(this.enemyBlood <= 30) {
             this.enemyBlood += 3;
         }
         if(this.enemySpeed <= 200) {
-            this.enemySpeed += 10;
+            this.enemySpeed += 5;
         }
         if (this.boshu % this.perDaBo == 0) {
             //临时将怪物数量增加为1.5倍

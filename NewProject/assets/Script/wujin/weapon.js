@@ -24,6 +24,8 @@ cc.Class({
     onLoad: function () {
         this.weaponLayer = cc.find("Canvas/weaponLayer");
         this.abilityLayer = cc.find("Canvas/abilityLayer");
+        this.goldLess = cc.find("Canvas/goldLess");
+        this.globalState = 0;
 
         //设置能力子节点的颜色
         this.setColor();
@@ -48,6 +50,12 @@ cc.Class({
                     self.btnState = 2;
                     B.game.putSource.play();
                     tower.getComponent('tower').init();
+                } else {
+                    self.scheduleOnce(function(){
+                        self.goldLess.opacity = 255;
+                        var action = cc.fadeTo(1, 0);
+                        self.goldLess.runAction(action);
+                    }, 0);
                 }
                 //隐藏其它按钮
                 self.hideAllWeaponBtn(self);
@@ -134,6 +142,7 @@ cc.Class({
     //显示可以安装武器塔的按钮
     showAllBtn: function (node) {
         var children = node.weaponLayer.getChildren();
+        children[0].getComponent('weapon').globalState = 1;
         var tempNode = null;
         for (var i = 0; i < children.length; i++) {
             tempNode = children[i].getComponent('weapon');
@@ -146,7 +155,9 @@ cc.Class({
 
     //隐藏可以安装武器塔的按钮
     hideAllWeaponBtn: function (node) {
+        node.node.getComponent('weapon').globalState = 0;
         var children = node.weaponLayer.getChildren();
+        children[0].getComponent('weapon').globalState = 0;
         var tempNode = null;
         for (var i = 0; i < children.length; i++) {
             tempNode = children[i].getComponent('weapon');
@@ -156,5 +167,17 @@ cc.Class({
             }
         }
     },
+    globalBtn:function(){
+        if(this.globalState == 0){
+            this.showAllBtn(this);
+                    //隐藏能力子节点
+            this.hideAllAbility(this);
+        } else {
+            this.hideAllWeaponBtn(this);
+                    //隐藏能力子节点
+            this.hideAllAbility(this);
+           
+        }
+    }
 
 });

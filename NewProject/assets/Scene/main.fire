@@ -716,7 +716,7 @@
       "__id__": 13
     },
     "_enabled": true,
-    "transition": 0,
+    "transition": 3,
     "pressedColor": {
       "__type__": "cc.Color",
       "r": 211,
@@ -732,7 +732,7 @@
       "a": 255
     },
     "duration": 0.1,
-    "zoomScale": 1.2,
+    "zoomScale": 1.1,
     "pressedSprite": null,
     "hoverSprite": null,
     "clickEvents": [
@@ -969,7 +969,7 @@
       "__id__": 20
     },
     "_enabled": true,
-    "transition": 0,
+    "transition": 3,
     "pressedColor": {
       "__type__": "cc.Color",
       "r": 211,
@@ -985,7 +985,7 @@
       "a": 255
     },
     "duration": 0.1,
-    "zoomScale": 1.2,
+    "zoomScale": 1.1,
     "pressedSprite": null,
     "hoverSprite": null,
     "clickEvents": [
@@ -994,7 +994,7 @@
       }
     ],
     "_N$interactable": true,
-    "_N$enableAutoGrayEffect": false,
+    "_N$enableAutoGrayEffect": true,
     "_N$normalColor": {
       "__type__": "cc.Color",
       "r": 214,
@@ -1144,7 +1144,7 @@
       "__id__": 27
     },
     "_enabled": true,
-    "transition": 0,
+    "transition": 3,
     "pressedColor": {
       "__type__": "cc.Color",
       "r": 211,
@@ -1160,7 +1160,7 @@
       "a": 255
     },
     "duration": 0.1,
-    "zoomScale": 1.2,
+    "zoomScale": 1.1,
     "pressedSprite": null,
     "hoverSprite": null,
     "clickEvents": [
@@ -1169,7 +1169,7 @@
       }
     ],
     "_N$interactable": true,
-    "_N$enableAutoGrayEffect": false,
+    "_N$enableAutoGrayEffect": true,
     "_N$normalColor": {
       "__type__": "cc.Color",
       "r": 214,
@@ -1627,7 +1627,7 @@
     "_actualFontSize": 25,
     "_fontSize": 25,
     "_lineHeight": 30,
-    "_enableWrapText": true,
+    "_enableWrapText": false,
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
@@ -1647,10 +1647,10 @@
     "_enabled": true,
     "isAlignOnce": true,
     "_target": null,
-    "_alignFlags": 16,
-    "_left": 0,
-    "_right": 0,
-    "_top": 0,
+    "_alignFlags": 0,
+    "_left": 100,
+    "_right": 100,
+    "_top": 11.5,
     "_bottom": 20,
     "_verticalCenter": 0,
     "_horizontalCenter": 0,
@@ -1841,16 +1841,16 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 25,
-    "_fontSize": 25,
+    "_actualFontSize": 20,
+    "_fontSize": 20,
     "_lineHeight": 33,
     "_enableWrapText": true,
     "_N$file": {
       "__uuid__": "b54c9165-f9c3-434a-be43-51dcff4f0ae5"
     },
     "_isSystemFontUsed": false,
-    "_spacingX": 2,
-    "_N$string": "1.点击开始游戏按钮，进入游戏；\n2.花费金币建设葫芦炮塔、购买BUFF；\n3.击杀蛇精夫妇获得分数和金币，通过分数自动解锁新的葫芦娃，每个葫芦娃具备一种神灵BUFF，可以赋予葫芦炮塔攻击特效；\n4.击退蛇精夫妇，保护爷爷！\n",
+    "_spacingX": 0,
+    "_N$string": "1.点击开始游戏按钮，进入游戏；\n2.花费金币建设葫芦炮塔、购买BUFF；\n3.击杀蛇精夫妇获得分数和金币，通过分数自动解锁新的葫芦娃，每个葫芦娃具备一种神灵BUFF，可以赋予葫芦炮塔攻击特效；\n4.击退蛇精夫妇，保护爷爷！\n\n道具花费金币数：\n炮塔 150，炮塔buff 100，隐身buff 300",
     "_N$horizontalAlign": 0,
     "_N$verticalAlign": 0,
     "_N$fontFamily": "Arial",
