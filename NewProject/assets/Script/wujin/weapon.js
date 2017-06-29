@@ -51,11 +51,11 @@ cc.Class({
                     B.game.putSource.play();
                     tower.getComponent('tower').init();
                 } else {
-                    self.scheduleOnce(function(){
+                    if(B.game.daojishi == -1){
                         self.goldLess.opacity = 255;
                         var action = cc.fadeTo(1, 0);
                         self.goldLess.runAction(action);
-                    }, 0);
+                    }
                 }
                 //隐藏其它按钮
                 self.hideAllWeaponBtn(self);

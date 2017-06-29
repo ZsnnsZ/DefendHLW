@@ -24,9 +24,11 @@ cc.Class({
                     self.parentNode.getComponent('invisible').visibleState = 0;
                 }, 3);
             } else {
-                self.goldLess.opacity = 255;
-                var action = cc.fadeTo(1, 0);
-                self.goldLess.runAction(action);
+                if(B.game.daojishi == -1){
+                    self.goldLess.opacity = 255;
+                    var action = cc.fadeTo(1, 0);
+                    self.goldLess.runAction(action);
+                }
             }
             self.parentNode.getComponent('invisible').blueState = 0;
             self.node.active = false;

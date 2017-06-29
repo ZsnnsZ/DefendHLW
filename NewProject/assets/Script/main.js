@@ -26,6 +26,9 @@ cc.Class({
     // use this for initialization
     onLoad: function () {
         this.audioID = cc.audioEngine.play(this.audioSource, true, 1);
+        cc.director.preloadScene('wujin', function () {
+            cc.log('Next scene preloaded');
+        });
     },
     // 开始游戏
     onBtnPlay: function () {

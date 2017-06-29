@@ -215,7 +215,7 @@ cc.Class({
             this.shezhiBtn = 1
         } else {
             this.setMenu.active = false;
-            this.shezhiBtn = 0
+            this.shezhiBtn = 0;
         }
     },
 
@@ -229,6 +229,7 @@ cc.Class({
             cc.audioEngine.resumeAll();
         }
         this.setMenu.active = false;
+        this.shezhiBtn = 0;
     },
 
     //回到主界面
@@ -251,16 +252,18 @@ cc.Class({
     onBtnPauseGame: function() {
         this.clickSource.play();
         this.zantingTip.active = true;
-        cc.game.pause();
+        cc.director.pause();
         this.setMenu.active = false;
+        this.shezhiBtn = 0;
     },
 
     //继续游戏
     onBtnGoon:function(){
         this.clickSource.play();
         this.zantingTip.active = false;
-        cc.game.resume();
+        cc.director.resume();
         this.setMenu.active = false;
+        this.shezhiBtn = 0;
     },
 
     //获得金币

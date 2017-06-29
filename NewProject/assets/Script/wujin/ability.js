@@ -35,10 +35,12 @@ cc.Class({
         if (B.game.canBuy(this.coins)) {
             this.getBuff();
         } else {
-            this.goldLess = cc.find("Canvas/goldLess");
-            this.goldLess.opacity = 255;
-            var action = cc.fadeTo(1, 0);
-            this.goldLess.runAction(action);
+            if(B.game.daojishi == -1){
+                this.goldLess = cc.find("Canvas/goldLess");
+                this.goldLess.opacity = 255;
+                var action = cc.fadeTo(1, 0);
+                this.goldLess.runAction(action);
+            }
             return 0;
         }
     },
